@@ -55,8 +55,8 @@ describe Chem::Structure do
     end
   end
 
-  describe "#reorder_atoms_by_topology" do
-    it "reorders atoms to match the residue hierarchy" do
+  describe "#reorder_by_topology" do
+    it "sorts by residue number then atom number when names are not in the template" do
       struc = Chem::Structure.build do
         atom "CA1", vec3(0, 0, 0)
         atom "N2", vec3(1, 0, 0)
@@ -64,16 +64,73 @@ describe Chem::Structure do
         atom "CA2", vec3(3, 0, 0)
       end
       chain = Chem::Chain.new struc, 'A'
-      ala = Chem::Residue.new chain, 1, "ALA"
       gly = Chem::Residue.new chain, 2, "GLY"
+      ala = Chem::Residue.new chain, 1, "ALA"
       struc.atoms[2].residue = ala
       struc.atoms[0].residue = ala
       struc.atoms[1].residue = gly
       struc.atoms[3].residue = gly
       struc.atoms.map(&.name).should eq %w(CA1 N2 N1 CA2)
 
-      struc.reorder_atoms_by_topology
-      struc.atoms.map(&.name).should eq %w(N1 CA1 N2 CA2)
+      struc.reorder_by_topology
+      struc.atoms.map(&.name).should eq %w(CA1 N1 N2 CA2)
+      struc.atoms.map(&.number).should eq [1, 3, 2, 4]
+      struc.residues.map(&.name).should eq %w(ALA GLY)
+    end
+
+    it "sorts atoms by residue template then number" do
+      struc = Chem::Structure.build do
+        atom "CB", 5, vec3(0, 0, 0)
+        atom "CA", 20, vec3(1, 0, 0)
+        atom "N", 10, vec3(2, 0, 0)
+      end
+      chain = Chem::Chain.new struc, 'A'
+      ala = Chem::Residue.new chain, 1, "ALA"
+      struc.atoms.each { |atom| atom.residue = ala }
+
+      struc.reorder_by_topology
+      struc.atoms.map(&.name).should eq %w(N CA CB)
+      struc.atoms.map(&.number).should eq [10, 20, 5]
+      ala.atoms.map(&.name).should eq %w(N CA CB)
+    end
+
+    it "places atoms missing from the template after templated atoms" do
+      struc = Chem::Structure.build do
+        atom "X", 1, vec3(0, 0, 0), Chem::PeriodicTable::C
+        atom "CA", 3, vec3(1, 0, 0)
+        atom "N", 2, vec3(2, 0, 0)
+      end
+      chain = Chem::Chain.new struc, 'A'
+      ala = Chem::Residue.new chain, 1, "ALA"
+      struc.atoms.each { |atom| atom.residue = ala }
+
+      struc.reorder_by_topology
+      struc.atoms.map(&.name).should eq %w(N CA X)
+      struc.atoms.map(&.number).should eq [2, 3, 1]
+    end
+
+    it "sorts chains by id" do
+      struc = Chem::Structure.build do
+        chain 'B' do
+          residue "GLY", 1 do
+            atom "CA", vec3(0, 0, 0)
+            atom "N", vec3(1, 0, 0)
+          end
+        end
+        chain 'A' do
+          residue "ALA", 1 do
+            atom "CA", vec3(2, 0, 0)
+            atom "N", vec3(3, 0, 0)
+          end
+        end
+      end
+      struc.chains.map(&.id).should eq ['B', 'A']
+
+      struc.reorder_by_topology
+      struc.chains.map(&.id).should eq ['A', 'B']
+      struc.atoms.map { |atom| {atom.chain.id, atom.name} }.should eq [
+        {'A', "N"}, {'A', "CA"}, {'B', "N"}, {'B', "CA"},
+      ]
     end
   end
 

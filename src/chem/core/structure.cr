@@ -124,7 +124,8 @@ module Chem
     #
     # This order is independent of the chain/residue hierarchy. Changing
     # residue numbers or chain ids does not reorder the list. Use
-    # `#reorder_atoms_by_topology` to match hierarchy order.
+    # `#reorder_by_topology` to sort by chain, residue, template,
+    # and atom number.
     def atoms : AtomView
       AtomView.new @atoms
     end
@@ -564,8 +565,8 @@ module Chem
     # match.
     #
     # `#atoms` is insertion-ordered. After topology is assigned, atoms
-    # are reordered to match chain/residue order unless *reorder* is
-    # `false`.
+    # are reordered by chain, residue, template, and atom number unless
+    # *reorder* is `false`. Atom numbers are left unchanged.
     #
     # NOTE: Fragments are assigned to a unique chain unless the chain
     # limit (62) is reached, otherwise all residues are assigned to the
@@ -626,7 +627,7 @@ module Chem
 
       renumber_residues_by_connectivity split_chains: false
       guess_unknown_residue_types
-      reorder_atoms_by_topology if reorder
+      reorder_by_topology if reorder
     end
 
     # Determines the atom hybridizations based on the average bond angles.
@@ -753,22 +754,38 @@ module Chem
       ResidueView.new residues
     end
 
-    # Reorders `#atoms` to match chain/residue order.
+    # Reorders chains, residues, and atoms by topology.
     #
-    # `Structure#atoms` follows insertion order and is not updated when
-    # residue numbers, chain ids, or similar labels change. Call this
-    # after rearranging the hierarchy if the atom list should follow
-    # topology. No-op when the structure has no topology.
-    def reorder_atoms_by_topology : Nil
+    # Chains are sorted by id, residues by number then insertion code,
+    # and atoms in each residue by residue template order then atom
+    # number. Atoms not in the template stay after the preceding
+    # templated atom (ter caps, extra atoms), keeping their current
+    # relative order. Residues without a template are left as assigned.
+    #
+    # Until this is called, `Structure#atoms` follows insertion order
+    # that may or may not match topology.
+    # No-op when the structure has no topology.
+    #
+    # NOTE: Atom numbers are unchanged.
+    def reorder_by_topology : Nil
       return unless has_topology?
-      atoms = [] of Atom
+      @chains.sort_by!(&.id)
       @chains.each do |chain|
+        chain.residues.to_unsafe.sort_by! do |residue|
+          {residue.number, residue.insertion_code || 'A'.pred}
+        end
         chain.residues.each do |residue|
-          atoms.concat residue.atoms.to_unsafe
+          if template = residue.template
+            sort_atoms_by_template residue.atoms.to_unsafe, template
+          end
         end
       end
       @atoms.clear
-      @atoms.concat atoms
+      @chains.each do |chain|
+        chain.residues.each do |residue|
+          @atoms.concat residue.atoms.to_unsafe
+        end
+      end
     end
 
     def to_s(io : IO)
@@ -853,6 +870,48 @@ module Chem
       actual.tally == expected.tally
     end
   end
+end
+
+# Sorts *atoms* by *template* order. Atoms not in the template stay
+# after the preceding templated atom (or at the end) in their current
+# order. If no atom matches the template, atoms are sorted by number.
+private def sort_atoms_by_template(
+  atoms : Array(Chem::Atom),
+  template : Chem::Templates::Residue,
+) : Nil
+  return if atoms.size <= 1
+
+  name_rank = {} of String => Int32
+  template.atoms.each_with_index { |atom_t, i| name_rank[atom_t.name] = i }
+
+  extras_after = {} of Chem::Atom? => Array(Chem::Atom)
+  templated = [] of Chem::Atom
+  prev = nil.as(Chem::Atom?)
+  atoms.each do |atom|
+    if name_rank[atom.name]?
+      templated << atom
+      prev = atom
+    else
+      (extras_after[prev] ||= [] of Chem::Atom) << atom
+    end
+  end
+
+  if templated.empty?
+    atoms.sort_by!(&.number)
+    return
+  end
+
+  templated.sort_by! { |atom| {name_rank[atom.name], atom.number} }
+
+  ordered = [] of Chem::Atom
+  templated.each do |atom|
+    ordered << atom
+    extras_after[atom]?.try { |extras| ordered.concat extras }
+  end
+  extras_after[nil]?.try { |extras| ordered.concat extras }
+
+  atoms.clear
+  atoms.concat ordered
 end
 
 private def next_chain_id(ch : Char) : Char
