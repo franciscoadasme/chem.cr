@@ -552,7 +552,8 @@ class Chem::Residue
   end
 
   # Sets the residue number. This does not reorder the parent chain;
-  # use `Chain#sort_residues!` if iteration should follow numbering.
+  # use `Structure#reorder_by_topology` if iteration should follow
+  # numbering.
   def number=(number : Int32) : Int32
     return @number if @number == number
     old = @number

@@ -153,7 +153,7 @@ module Chem
                     residue.bonded_residues.find(&.in?(residues))
         end
       end
-      sort_residues!
+      @residues.sort!
     end
 
     def residues : ResidueView
@@ -194,16 +194,6 @@ module Chem
       chain
     end
 
-    # Sorts residues by chain id, number, and insertion code.
-    #
-    # Residue numbers are labels; assigning `#number=` does not reorder
-    # the chain. Call this after changing numbers if iteration should
-    # follow numbering.
-    def sort_residues! : Nil
-      @residues.sort!
-      rebuild_residue_table
-    end
-
     protected def update_residue_index(
       residue : Residue,
       old_number : Int32,
@@ -212,13 +202,6 @@ module Chem
       old = {old_number, old_inscode}
       @residue_table.delete(old) if @residue_table[old]?.same?(residue)
       @residue_table[{residue.number, residue.insertion_code}] = residue
-    end
-
-    private def rebuild_residue_table : Nil
-      @residue_table.clear
-      @residues.each do |residue|
-        @residue_table[{residue.number, residue.insertion_code}] = residue
-      end
     end
   end
 end

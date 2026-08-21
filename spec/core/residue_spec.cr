@@ -369,7 +369,7 @@ describe Chem::Residue do
       structure.dig('A', 75).insertion_code = 'C'
       residue.insertion_code = nil
       chain.residues.select(&.protein?).join(&.code).should eq "WGSNKPV"
-      chain.sort_residues!
+      structure.reorder_by_topology
       chain.residues.select(&.protein?).join(&.code).should eq "NGSWKPV"
     end
   end
@@ -452,7 +452,7 @@ describe Chem::Residue do
       seqres.should eq "GKLKVLGDVIEVGGKLKVLGDVIEV"
       structure.dig('B', 10).number = 40
       chain.residues.select(&.protein?).join(&.code).should eq "GKLKVLGDVIEVGGKLKVLGDVIEV"
-      chain.sort_residues!
+      structure.reorder_by_topology
       chain.residues.select(&.protein?).join(&.code).should eq "GKLKVLGDVIVGGKLKVLGDVIEVE"
     end
   end
