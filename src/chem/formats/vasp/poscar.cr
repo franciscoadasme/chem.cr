@@ -61,32 +61,33 @@ module Chem::VASP::Poscar
     end
     pull.consume_line
 
-    Structure.build(
-      guess_bonds: guess_bonds,
-      guess_names: guess_names,
-      source_file: (file = io).is_a?(File) ? file.path : nil,
-      use_templates: false,
-    ) do |builder|
-      builder.title title
-      builder.cell cell
-      elements.each do |element|
-        vec = Spatial::Vec3.new pull.next_f, pull.next_f, pull.next_f
-        vec = fractional ? cell.cart(vec) : vec * scale_factor
-        atom = builder.atom element, vec
-        if constrained
-          case {read_flag(pull), read_flag(pull), read_flag(pull)}
-          when {false, true, true}   then atom.constraint = :x
-          when {true, false, true}   then atom.constraint = :y
-          when {true, true, false}   then atom.constraint = :z
-          when {false, false, true}  then atom.constraint = :xy
-          when {false, true, false}  then atom.constraint = :xz
-          when {true, false, false}  then atom.constraint = :yz
-          when {false, false, false} then atom.constraint = :xyz
-          end
+    source_file = (file = io).is_a?(File) ? file.path : nil
+    struc = Structure.new(source_file)
+    struc.title = title
+    struc.cell = cell
+    elements.each do |element|
+      vec = Spatial::Vec3.new pull.next_f, pull.next_f, pull.next_f
+      vec = fractional ? cell.cart(vec) : vec * scale_factor
+      atom = Atom.new(struc, element, vec)
+      if constrained
+        case {read_flag(pull), read_flag(pull), read_flag(pull)}
+        when {false, true, true}   then atom.constraint = :x
+        when {true, false, true}   then atom.constraint = :y
+        when {true, true, false}   then atom.constraint = :z
+        when {false, false, true}  then atom.constraint = :xy
+        when {false, true, false}  then atom.constraint = :xz
+        when {true, false, false}  then atom.constraint = :yz
+        when {false, false, false} then atom.constraint = :xyz
         end
-        pull.consume_line
       end
+      pull.consume_line
     end
+    if guess_bonds
+      struc.guess_bonds
+      struc.guess_formal_charges
+    end
+    struc.guess_names if guess_names
+    struc
   end
 
   define_file_overload(VASP::Poscar, read)

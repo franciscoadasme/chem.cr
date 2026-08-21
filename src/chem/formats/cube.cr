@@ -58,17 +58,15 @@ module Chem::Cube
     end
 
     pull = PullParser.new(io)
-    Structure.build(
-      source_file: (file = io).is_a?(File) ? file.path : nil,
-    ) do |builder|
-      n_atoms.times do
-        pull.consume_line
-        builder.atom \
-          element: (PeriodicTable[pull.next_i]? || pull.error("Unknown element")),
-          partial_charge: pull.next_f,
-          pos: read_vector(pull)
-      end
+    source_file = (file = io).is_a?(File) ? file.path : nil
+    struc = Structure.new(source_file)
+    n_atoms.times do
+      pull.consume_line
+      ele = PeriodicTable[pull.next_i]? || pull.error("Unknown element")
+      chg = pull.next_f
+      Atom.new(struc, ele, read_vector(pull), partial_charge: chg)
     end
+    struc
   end
 
   define_file_overload(Cube, read, read_info, read_structure)

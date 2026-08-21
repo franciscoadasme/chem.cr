@@ -22,6 +22,7 @@
 #### Input/output
 
 - **Breaking:** `PSF.read` reads atoms and bonds only. Angle, dihedral, and improper sections are ignored.
+- **Breaking:** XYZ, POSCAR, Cube, Gen, and JDFTx readers construct `Structure` and `Atom` directly. They no longer invent atom names via `Structure::Builder`; names come from `guess_names` or explicit fields (extended XYZ).
 
 ## [v0.6.0] - 2023-08-09
 

@@ -738,6 +738,7 @@ describe Chem::PDB do
 
     it "aligns the unit cell to the xy-plane" do
       struc = Chem::VASP::Poscar.read spec_file("5e5v--unwrapped.poscar")
+      struc.atoms.each { |atom| atom.name = atom.element.symbol }
 
       io = IO::Memory.new
       Chem::PDB.write io, struc

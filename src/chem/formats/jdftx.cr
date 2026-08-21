@@ -7,38 +7,33 @@ module Chem::JDFTx
     fractional = false
     lattice_scale = {1.0, 1.0, 1.0}
 
-    struc = Structure.build(
-      guess_bonds: guess_bonds,
-      guess_names: guess_names,
-      source_file: (file = io).is_a?(File) ? file.path : nil,
-      use_templates: false,
-    ) do |builder|
-      # FIXME: use pull parser!
-      remove_multiple_line_commands(io.gets_to_end).each_line do |line|
-        tokens = line.split
-        case tokens.first?.try(&.downcase)
-        when "ion"
-          element = PeriodicTable[tokens[1]]
-          pos = Spatial::Vec3[*tokens[{2, 3, 4}].map(&.to_f)]
-          pos = pos.map(&.bohrs) unless fractional
-          atom = builder.atom element, pos
-          tokens.delete_at 5..8 if tokens[5] == "v" # ignore velocity if present
-          atom.constraint = :xyz if tokens[5].to_f == 0
-        when "coords-type"
-          fractional = tokens[1].downcase == "lattice"
-        when "latt-scale"
-          lattice_scale = tokens[{1, 2, 3}].map &.to_f
-        when "lattice"
-          builder.cell parse_cell(line)
-        end
+    source_file = (file = io).is_a?(File) ? file.path : nil
+    struc = Structure.new(source_file)
+    # FIXME: use pull parser!
+    remove_multiple_line_commands(io.gets_to_end).each_line do |line|
+      tokens = line.split
+      case tokens.first?.try(&.downcase)
+      when "ion"
+        element = PeriodicTable[tokens[1]]
+        pos = Spatial::Vec3[*tokens[{2, 3, 4}].map(&.to_f)]
+        pos = pos.map(&.bohrs) unless fractional
+        atom = Atom.new(struc, element, pos)
+        tokens.delete_at 5..8 if tokens[5] == "v" # ignore velocity if present
+        atom.constraint = :xyz if tokens[5].to_f == 0
+      when "coords-type"
+        fractional = tokens[1].downcase == "lattice"
+      when "latt-scale"
+        lattice_scale = tokens[{1, 2, 3}].map &.to_f
+      when "lattice"
+        struc.cell = parse_cell(line)
       end
+    end
 
-      if file = io.as?(File)
-        path = Path[file.path]
-        path = path.sibling "#{path.stem}.lattice"
-        if File.exists?(path)
-          builder.cell parse_cell remove_multiple_line_commands(File.read(path))
-        end
+    if file = io.as?(File)
+      path = Path[file.path]
+      path = path.sibling "#{path.stem}.lattice"
+      if File.exists?(path)
+        struc.cell = parse_cell remove_multiple_line_commands(File.read(path))
       end
     end
 
@@ -48,6 +43,11 @@ module Chem::JDFTx
       struc.pos.to_cart!
     end
 
+    if guess_bonds
+      struc.guess_bonds
+      struc.guess_formal_charges
+    end
+    struc.guess_names if guess_names
     struc
   end
 

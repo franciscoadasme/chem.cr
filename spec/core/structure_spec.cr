@@ -567,11 +567,11 @@ describe Chem::Structure do
       structure.guess_bonds
       structure.guess_formal_charges
       structure.bonds.select(&.double?)
-        .map(&.atoms.map(&.name).to_a)
-        .should eq [%w(P1 O1), %w(C5 O6), %w(C8 O8)]
-      structure.atoms.reject(&.formal_charge.zero?)
-        .to_h { |atom| {atom.name, atom.formal_charge} }
-        .should eq({"N1" => 1, "O2" => -1})
+        .map(&.atoms.map(&.element.symbol).to_a.sort!)
+        .should eq [%w(O P), %w(C O), %w(C O)]
+      charged = structure.atoms.reject(&.formal_charge.zero?)
+      charged.map { |atom| {atom.element.symbol, atom.formal_charge} }
+        .should eq [{"N", 1}, {"O", -1}]
     end
 
     it "guesses bonds of arginine" do

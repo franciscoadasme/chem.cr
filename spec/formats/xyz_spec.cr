@@ -18,6 +18,7 @@ describe Chem::XYZ do
     structure.chains.should be_empty
     structure.residues.should be_empty
     structure.atoms.all?(&.residue?.nil?).should be_true
+    structure.atoms.all?(&.name?.nil?).should be_true
   end
 
   it "reads all structures from a XYZ file" do

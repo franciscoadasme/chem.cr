@@ -24,104 +24,120 @@ module Chem::XYZ
     ext_parser = ConfigurationParser.new(pull)
     ext_parser.parse
 
-    struc = Structure.build(
-      guess_bonds: guess_bonds,
-      guess_names: guess_names,
-      source_file: (file = io).is_a?(File) ? file.path : nil,
-      use_templates: false,
-    ) do |builder|
-      ext_parser.cell.try { |cell| builder.cell cell }
+    source_file = (file = io).is_a?(File) ? file.path : nil
+    struc = Structure.new(source_file)
+    ext_parser.cell.try { |cell| struc.cell = cell }
 
-      n_atoms.times do
-        constraint = nil
-        chain = resname = resid = name = number = typename = mass = vdw_radius = nil
-        ele = PeriodicTable::C
-        pos = Spatial::Vec3.zero
-        formal_charge = 0
-        partial_charge = temperature_factor = 0.0
-        metadata = Metadata.new
-        occupancy = 1.0
+    chain = nil.as(Chain?)
+    residue = nil.as(Residue?)
+    ele_index = Hash(Element, Int32).new(default_value: 0)
 
-        pull.consume_line
-        ext_parser.fields.each do |field|
-          case field.name
-          when "species"
-            pull.consume_token
-            ele = PeriodicTable[pull.int? || pull.str]? ||
-                  pull.error("Unknown element")
-          when "pos"
-            pos = Spatial::Vec3.new pull.next_f, pull.next_f, pull.next_f
-          when "chain"
-            chain = pull.consume_token.expect(/^[a-zA-Z0-9]$/).char
-          when "constraint"
-            case {pull.next_bool, pull.next_bool, pull.next_bool}
-            when {true, true, true}    then constraint = Spatial::Direction::XYZ
-            when {false, true, true}   then constraint = Spatial::Direction::YZ
-            when {true, false, true}   then constraint = Spatial::Direction::XZ
-            when {true, true, false}   then constraint = Spatial::Direction::XY
-            when {false, false, true}  then constraint = Spatial::Direction::Z
-            when {false, true, false}  then constraint = Spatial::Direction::Y
-            when {true, false, false}  then constraint = Spatial::Direction::X
-            when {false, false, false} then constraint = nil
-            end
-          when "charge"
-            if field.type == Int32
-              formal_charge = pull.next_i
-            else
-              partial_charge = pull.next_f
-            end
-          when "formal_charge"
-            formal_charge = pull.next_i
-          when "mass"
-            mass = pull.next_f
-          when "name"
-            name = pull.next_s
-          when "occupancy"
-            occupancy = pull.next_f
-          when "partial_charge"
-            partial_charge = pull.next_f
-          when "resid"
-            resid = pull.next_i
-          when "resname"
-            resname = pull.next_s
-          when "number"
-            number = pull.next_i
-          when "temperature_factor", "bfactor"
-            temperature_factor = pull.next_f
-          when "typename"
-            typename = pull.next_s
-          when "vdw_radius"
-            vdw_radius = pull.next_f
-          else
-            value = if field.cols > 1
-                      (0...field.cols).map { pull.consume_token.parse(field.type) }
-                    else
-                      pull.consume_token.parse(field.type)
-                    end
-            metadata[field.name] = value
+    n_atoms.times do
+      constraint = nil
+      chain_id = resname = resid = name = number = typename = mass = vdw_radius = nil
+      ele = PeriodicTable::C
+      pos = Spatial::Vec3.zero
+      formal_charge = 0
+      partial_charge = temperature_factor = 0.0
+      metadata = Metadata.new
+      occupancy = 1.0
+
+      pull.consume_line
+      ext_parser.fields.each do |field|
+        case field.name
+        when "species"
+          pull.consume_token
+          ele = PeriodicTable[pull.int? || pull.str]? ||
+                pull.error("Unknown element")
+        when "pos"
+          pos = Spatial::Vec3.new pull.next_f, pull.next_f, pull.next_f
+        when "chain"
+          chain_id = pull.consume_token.expect(/^[a-zA-Z0-9]$/).char
+        when "constraint"
+          case {pull.next_bool, pull.next_bool, pull.next_bool}
+          when {true, true, true}    then constraint = Spatial::Direction::XYZ
+          when {false, true, true}   then constraint = Spatial::Direction::YZ
+          when {true, false, true}   then constraint = Spatial::Direction::XZ
+          when {true, true, false}   then constraint = Spatial::Direction::XY
+          when {false, false, true}  then constraint = Spatial::Direction::Z
+          when {false, true, false}  then constraint = Spatial::Direction::Y
+          when {true, false, false}  then constraint = Spatial::Direction::X
+          when {false, false, false} then constraint = nil
           end
+        when "charge"
+          if field.type == Int32
+            formal_charge = pull.next_i
+          else
+            partial_charge = pull.next_f
+          end
+        when "formal_charge"
+          formal_charge = pull.next_i
+        when "mass"
+          mass = pull.next_f
+        when "name"
+          name = pull.next_s
+        when "occupancy"
+          occupancy = pull.next_f
+        when "partial_charge"
+          partial_charge = pull.next_f
+        when "resid"
+          resid = pull.next_i
+        when "resname"
+          resname = pull.next_s
+        when "number"
+          number = pull.next_i
+        when "temperature_factor", "bfactor"
+          temperature_factor = pull.next_f
+        when "typename"
+          typename = pull.next_s
+        when "vdw_radius"
+          vdw_radius = pull.next_f
+        else
+          value = if field.cols > 1
+                    (0...field.cols).map { pull.consume_token.parse(field.type) }
+                  else
+                    pull.consume_token.parse(field.type)
+                  end
+          metadata[field.name] = value
         end
-
-        chain.try { |ch| builder.chain ch }
-        if i = resid
-          builder.residue resname || "UNK", i
-        elsif resname && builder.current_residue.try(&.name) != resname
-          builder.residue resname
-        end
-
-        atom = builder.atom ele, pos
-        {% for name in %w(constraint formal_charge mass name occupancy
-                         partial_charge number temperature_factor typename
-                         vdw_radius) %}
-          atom.{{name.id}} = {{name.id}} if {{name.id}}
-        {% end %}
-        atom.metadata.merge! metadata
       end
+
+      if ch = chain_id
+        chain = struc[ch]? || Chain.new(struc, ch)
+      end
+      if i = resid
+        chain ||= Chain.new(struc, 'A')
+        ele_index.clear
+        residue = chain[i]? || Residue.new(chain, i, resname || "UNK")
+      elsif resname && residue.try(&.name) != resname
+        chain ||= Chain.new(struc, 'A')
+        ele_index.clear
+        resid_n = (chain.residues.max_of?(&.number) || 0) + 1
+        residue = Residue.new(chain, resid_n, resname)
+      end
+
+      atom = if residue
+               atom_name = name || "#{ele.symbol}#{ele_index[ele] += 1}"
+               Atom.new(residue, atom_name, pos, element: ele, number: number)
+             else
+               Atom.new(struc, ele, pos, number: number)
+             end
+      {% for name in %w(constraint formal_charge mass occupancy
+                       partial_charge temperature_factor typename
+                       vdw_radius) %}
+        atom.{{name.id}} = {{name.id}} if {{name.id}}
+      {% end %}
+      atom.name = name if name && residue.nil?
+      atom.metadata.merge! metadata
     end
 
     ext_parser.title.try { |title| struc.title = title }
     struc.metadata.merge! ext_parser.metadata
-
+    if guess_bonds
+      struc.guess_bonds
+      struc.guess_formal_charges
+    end
+    struc.guess_names if guess_names
     struc
   end
 

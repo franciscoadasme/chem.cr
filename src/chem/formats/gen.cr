@@ -24,20 +24,15 @@ module Chem::Gen
     end
     pull.consume_line
 
-    structure = Structure.build(
-      guess_bonds: guess_bonds,
-      guess_names: guess_names,
-      source_file: (file = io).is_a?(File) ? file.path : nil,
-      use_templates: false,
-    ) do |builder|
-      n_atoms.times do
-        pull.next_s? # skip atom number
-        ele = ele_map[pull.next_i - 1]?
-        pull.error "Invalid element index (expected 1 to #{ele_map.size})" unless ele
-        vec = Spatial::Vec3.new pull.next_f, pull.next_f, pull.next_f
-        pull.consume_line
-        builder.atom ele, vec
-      end
+    source_file = (file = io).is_a?(File) ? file.path : nil
+    structure = Structure.new(source_file)
+    n_atoms.times do
+      pull.next_s? # skip atom number
+      ele = ele_map[pull.next_i - 1]?
+      pull.error "Invalid element index (expected 1 to #{ele_map.size})" unless ele
+      vec = Spatial::Vec3.new pull.next_f, pull.next_f, pull.next_f
+      pull.consume_line
+      Atom.new(structure, ele, vec)
     end
 
     if periodic
@@ -52,6 +47,11 @@ module Chem::Gen
       structure.pos.to_cart! if fractional
     end
 
+    if guess_bonds
+      structure.guess_bonds
+      structure.guess_formal_charges
+    end
+    structure.guess_names if guess_names
     structure
   end
 

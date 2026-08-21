@@ -37,6 +37,7 @@ describe Chem::VASP::Poscar do
       st.chains.should be_empty
       st.residues.should be_empty
       st.atoms[0].residue?.should be_nil
+      st.atoms[0].name?.should be_nil
     end
 
     it "parses a file with scaled Cartesian coordinates" do

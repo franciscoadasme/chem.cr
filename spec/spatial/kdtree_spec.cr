@@ -85,11 +85,11 @@ describe Chem::Spatial::PeriodicKDTree do
 
     it "returns neighbors in off-center non-wrapped point cloud" do
       structure = load_file "5e61--off-center.poscar"
-      n9 = structure.atoms.find!("N9")   # 174
-      c42 = structure.atoms.find!("C42") # 41
-      c43 = structure.atoms.find!("C43") # 42
-      h64 = structure.atoms.find!("H64") # 127
-      h65 = structure.atoms.find!("H65") # 128
+      n9 = structure.atoms[174]
+      c42 = structure.atoms[41]
+      c43 = structure.atoms[42]
+      h64 = structure.atoms[127]
+      h65 = structure.atoms[128]
 
       kdtree = Chem::Spatial::PeriodicKDTree.new(structure.pos.to_a, structure.cell)
       kdtree.neighbors(c42.pos, within: 1.82).should eq [41, 127, 128, 174, 42]
