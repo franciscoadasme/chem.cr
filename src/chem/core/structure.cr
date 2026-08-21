@@ -620,7 +620,7 @@ module Chem
       if polymers.size + grouped_nonpolymers.size <= MAX_CHAINS
         reset_chains
         (polymers + grouped_nonpolymers).each do |residues|
-          chain = Chain.new self, next_chain_id(@chains.last?.try(&.id) || 'A'.pred)
+          chain = Chain.new self, Chain.succ_id(@chains.last?.try(&.id))
           residues.each &.chain=(chain)
         end
       end
@@ -912,19 +912,4 @@ private def sort_atoms_by_template(
 
   atoms.clear
   atoms.concat ordered
-end
-
-private def next_chain_id(ch : Char) : Char
-  case ch
-  when 'A'.pred
-    'A'
-  when 'A'..'Y', 'a'..'y', '0'..'8'
-    ch.succ
-  when 'Z'
-    'a'
-  when 'z'
-    '0'
-  else
-    raise ArgumentError.new("No more chains available")
-  end
 end

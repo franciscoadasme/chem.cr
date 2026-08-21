@@ -15,6 +15,36 @@ module Chem
       @structure << self
     end
 
+    # Returns the next alphanumeric chain identifier after *id*.
+    #
+    # The sequence is `A`–`Z`, then `a`–`z`, then `0`–`9`. Returns `'A'`
+    # if *id* is `nil`. Raises if there is no next identifier.
+    #
+    # ```
+    # Chain.succ_id      # => 'A'
+    # Chain.succ_id('A') # => 'B'
+    # Chain.succ_id('Z') # => 'a'
+    # Chain.succ_id('z') # => '0'
+    # ```
+    def self.succ_id(id : Char? = nil) : Char
+      return 'A' unless id
+      case id
+      when 'A'..'Y', 'a'..'y', '0'..'8'
+        id.succ
+      when 'Z'
+        'a'
+      when 'z'
+        '0'
+      else
+        raise ArgumentError.new("No more chains available")
+      end
+    end
+
+    # Returns the next alphanumeric chain identifier after this chain.
+    def succ_id : Char
+      Chain.succ_id(@id)
+    end
+
     protected def <<(residue : Residue) : self
       @residues << residue
       @residue_table[{residue.number, residue.insertion_code}] = residue

@@ -237,17 +237,7 @@ module Chem
     end
 
     private def next_chain : Chain
-      next_id = case id = @chain.try(&.id) || 'A'.pred
-                when 'A'..'Y', 'a'..'y', '0'..'8', 'A'.pred
-                  id.succ
-                when 'Z'
-                  'a'
-                when 'z'
-                  '0'
-                else
-                  raise ArgumentError.new("Non-alphanumeric chain id")
-                end
-      chain next_id
+      chain Chain.succ_id(@chain.try(&.id))
     end
 
     private def next_residue(name : String = "UNK") : Residue

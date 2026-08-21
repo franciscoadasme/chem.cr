@@ -9,6 +9,34 @@ describe Chem::Chain do
     end
   end
 
+  describe ".succ_id" do
+    it "returns A when id is omitted" do
+      Chem::Chain.succ_id.should eq 'A'
+      Chem::Chain.succ_id(nil).should eq 'A'
+    end
+
+    it "follows A-Z, a-z, then 0-9" do
+      Chem::Chain.succ_id('A').should eq 'B'
+      Chem::Chain.succ_id('Y').should eq 'Z'
+      Chem::Chain.succ_id('Z').should eq 'a'
+      Chem::Chain.succ_id('z').should eq '0'
+      Chem::Chain.succ_id('8').should eq '9'
+    end
+
+    it "fails after 9" do
+      expect_raises ArgumentError, "No more chains available" do
+        Chem::Chain.succ_id('9')
+      end
+    end
+  end
+
+  describe "#succ_id" do
+    it "returns the next identifier after this chain" do
+      struc = Chem::Structure.new
+      Chem::Chain.new(struc, 'Z').succ_id.should eq 'a'
+    end
+  end
+
   describe "#<=>" do
     it "compares based on identifier" do
       chains = Chem::Structure.build do

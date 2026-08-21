@@ -136,7 +136,7 @@ describe Chem::Structure::Builder do
   end
 
   it "fails over chain id limit" do
-    expect_raises ArgumentError, "Non-alphanumeric chain id" do
+    expect_raises ArgumentError, "No more chains available" do
       Chem::Structure.build do
         63.times do
           chain { }
