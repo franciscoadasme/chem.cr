@@ -727,7 +727,7 @@ module Chem
 
     protected def reset_cache : Nil
       @chain_table.clear
-      @chains.sort_by! &.id
+      @chains.sort!
       @chains.each do |chain|
         @chain_table[chain.id] = chain
       end

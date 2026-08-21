@@ -1,5 +1,7 @@
 module Chem
   class Chain
+    include Comparable(Chain)
+
     @residue_table = {} of Tuple(Int32, Char?) => Residue
     @residues = [] of Residue
 
