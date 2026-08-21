@@ -22,53 +22,55 @@ module Chem::PSF
     pull.skip_blank_lines
 
     n_atoms = parse_section_header(pull, "ATOM")
-    atoms = [] of Atom
-    structure = Structure.build(
-      source_file: (file = io).is_a?(File) ? file.path : nil,
-    ) do |builder|
-      prev_seg = nil
-      n_atoms.times do
-        case variant
-        in .standard?
-          number = pull.at(0..7).int
-          segment = pull.at(9..12).str.strip
-          resid = pull.at(14..17).int
-          resname = pull.at(19..22).str.strip
-          name = pull.at(24..27).str.strip
-          typename = pull.at(29..32).str.strip
-          charge = pull.at(34..47).float
-          mass = pull.at(48..61).float
-        in .extended? # longer (wider columns) numbers and names
-          number = pull.at(0..9).int
-          segment = pull.at(11..18).str.strip
-          resid = pull.at(20..27).int
-          resname = pull.at(29..36).str.strip
-          name = pull.at(38..45).str.strip
-          typename = pull.at(47..50).str.strip
-          charge = pull.at(52..65).float
-          mass = pull.at(66..79).float
-        in .namd? # whitespace separated
-          number = pull.next_i
-          segment = pull.next_s
-          resid = pull.next_i
-          resname = pull.next_s
-          name = pull.next_s
-          typename = pull.next_s
-          charge = pull.next_f
-          mass = pull.next_f
-        end
-
-        builder.chain { } unless segment == prev_seg # force new chain
-        builder.residue resname, resid
-        atom = builder.atom name, number, Spatial::Vec3.zero
-        atom.typename = typename
-        atom.partial_charge = charge
-        atom.mass = mass
-        atoms << atom
-
-        prev_seg = segment
-        pull.consume_line
+    source_file = (file = io).is_a?(File) ? file.path : nil
+    struc = Structure.new(source_file)
+    chain = Chain.new(struc, Chain.succ_id)
+    prev_seg = nil
+    n_atoms.times do
+      case variant
+      in .standard?
+        number = pull.at(0..7).int
+        segment = pull.at(9..12).str.strip
+        resid = pull.at(14..17).int
+        resname = pull.at(19..22).str.strip
+        name = pull.at(24..27).str.strip
+        typename = pull.at(29..32).str.strip
+        charge = pull.at(34..47).float
+        mass = pull.at(48..61).float
+      in .extended? # longer (wider columns) numbers and names
+        number = pull.at(0..9).int
+        segment = pull.at(11..18).str.strip
+        resid = pull.at(20..27).int
+        resname = pull.at(29..36).str.strip
+        name = pull.at(38..45).str.strip
+        typename = pull.at(47..50).str.strip
+        charge = pull.at(52..65).float
+        mass = pull.at(66..79).float
+      in .namd? # whitespace separated
+        number = pull.next_i
+        segment = pull.next_s
+        resid = pull.next_i
+        resname = pull.next_s
+        name = pull.next_s
+        typename = pull.next_s
+        charge = pull.next_f
+        mass = pull.next_f
       end
+
+      # A new segment starts a new chain (A, B, …), not a chain named
+      # after the segment.
+      if prev_seg && segment != prev_seg
+        chain = Chain.new(struc, chain.succ_id)
+      end
+      residue = chain[resid]? || Residue.new(chain, resid, resname)
+      Atom.new(residue, name, Spatial::Vec3.zero,
+        number: number,
+        typename: typename,
+        partial_charge: charge,
+        mass: mass)
+
+      prev_seg = segment
+      pull.consume_line
     end
 
     pull.skip_blank_lines
@@ -77,13 +79,13 @@ module Chem::PSF
     ((n_bonds / 4).ceil.to_i).times do
       4.times do
         break unless remaining > 0
-        atoms[pull.next_i - 1].bonds.add atoms[pull.next_i - 1]
+        struc.atoms[pull.next_i - 1].bonds.add struc.atoms[pull.next_i - 1]
         remaining -= 1
       end
       pull.consume_line
     end
 
-    structure
+    struc
   end
 
   define_file_overload(PSF, read)
