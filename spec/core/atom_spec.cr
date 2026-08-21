@@ -166,13 +166,18 @@ describe Chem::Atom do
       atom = Chem::Structure.build { atom "CA", vec3(0, 0, 0) }.atoms[0]
       atom.spec.should eq "CA(1)"
     end
+
+    it "uses the element symbol when the atom has no name" do
+      atom = Chem::Atom.new Chem::Structure.new, Chem::PeriodicTable::C, vec3(0, 0, 0)
+      atom.spec.should eq "C(1)"
+    end
   end
 
   describe "#==" do
     it "compares by identity, not number" do
       struc = Chem::Structure.new
-      a = Chem::Atom.new struc, 1, Chem::PeriodicTable::C, "C1", vec3(0, 0, 0)
-      b = Chem::Atom.new struc, 1, Chem::PeriodicTable::O, "O1", vec3(1, 0, 0)
+      a = Chem::Atom.new struc, Chem::PeriodicTable::C, vec3(0, 0, 0), name: "C1", number: 1
+      b = Chem::Atom.new struc, Chem::PeriodicTable::O, vec3(1, 0, 0), name: "O1", number: 1
       (a == b).should be_false
       (a == a).should be_true
       (a <=> b).should eq 0
@@ -188,6 +193,16 @@ describe Chem::Atom do
       atom.residue.should be other
       struc.dig?('A', 1, "CA").should be_nil
       struc.dig('A', 2, "CA").should be atom
+    end
+
+    it "raises if the atom has no name" do
+      struc = Chem::Structure.new
+      atom = Chem::Atom.new struc, Chem::PeriodicTable::C, vec3(0, 0, 0)
+      chain = Chem::Chain.new struc, 'A'
+      residue = Chem::Residue.new chain, 1, "ALA"
+      expect_raises(ArgumentError, "Atom in a residue must have a name") do
+        atom.residue = residue
+      end
     end
 
     it "raises if the residue belongs to another structure" do
@@ -209,7 +224,7 @@ describe Chem::Atom do
         atom "N", vec3(0, 0, 0)
       end
       expect_raises(ArgumentError, "Structure has topology; atom must belong to a residue") do
-        Chem::Atom.new struc, 2, Chem::PeriodicTable::C, "CA", vec3(1, 0, 0)
+        Chem::Atom.new struc, Chem::PeriodicTable::C, vec3(1, 0, 0), name: "CA"
       end
     end
 
@@ -220,8 +235,71 @@ describe Chem::Atom do
       chain = Chem::Chain.new struc, 'A'
       residue = Chem::Residue.new chain, 1, "ALA"
       expect_raises(ArgumentError, "Cannot mix atoms with and without topology") do
-        Chem::Atom.new struc, 2, Chem::PeriodicTable::N, "N", vec3(1, 0, 0), residue: residue
+        Chem::Atom.new residue, "N", vec3(1, 0, 0)
       end
+    end
+
+    it "requires only structure, element, and position" do
+      struc = Chem::Structure.new
+      atom = Chem::Atom.new struc, Chem::PeriodicTable::C, vec3(1, 2, 3)
+      atom.element.should eq Chem::PeriodicTable::C
+      atom.pos.should eq vec3(1, 2, 3)
+      atom.name?.should be_nil
+      atom.number.should eq 1
+      atom.residue?.should be_nil
+    end
+
+    it "assigns serial numbers in insertion order when omitted" do
+      struc = Chem::Structure.new
+      a = Chem::Atom.new struc, Chem::PeriodicTable::C, vec3(0, 0, 0)
+      b = Chem::Atom.new struc, Chem::PeriodicTable::N, vec3(1, 0, 0)
+      a.number.should eq 1
+      b.number.should eq 2
+    end
+
+    it "creates an atom in a residue from name and position" do
+      struc = Chem::Structure.new
+      chain = Chem::Chain.new struc, 'A'
+      residue = Chem::Residue.new chain, 1, "ALA"
+      atom = Chem::Atom.new residue, "CA", vec3(0, 0, 0)
+      atom.residue.should be residue
+      atom.name.should eq "CA"
+      atom.element.should eq Chem::PeriodicTable::C
+      atom.number.should eq 1
+    end
+
+    it "accepts element as a named argument when name is given" do
+      struc = Chem::Structure.new
+      chain = Chem::Chain.new struc, 'A'
+      residue = Chem::Residue.new chain, 1, "ALA"
+      atom = Chem::Atom.new residue, "CA", vec3(0, 0, 0), element: Chem::PeriodicTable::N
+      atom.element.should eq Chem::PeriodicTable::N
+    end
+
+    it "raises if a residue atom has no name" do
+      struc = Chem::Structure.new
+      chain = Chem::Chain.new struc, 'A'
+      residue = Chem::Residue.new chain, 1, "ALA"
+      expect_raises(ArgumentError, "Atom in a residue must have a name") do
+        Chem::Atom.new struc, Chem::PeriodicTable::C, vec3(0, 0, 0), residue: residue
+      end
+    end
+  end
+
+  describe "#name=" do
+    it "raises if clearing the name of an atom in a residue" do
+      atom = fake_structure.dig('A', 1, "CA")
+      expect_raises(ArgumentError, "Atom in a residue must have a name") do
+        atom.name = nil
+      end
+    end
+
+    it "updates the residue atom table" do
+      atom = fake_structure.dig('A', 1, "CA")
+      residue = atom.residue
+      atom.name = "CX"
+      residue["CX"].should be atom
+      residue["CA"]?.should be_nil
     end
   end
 

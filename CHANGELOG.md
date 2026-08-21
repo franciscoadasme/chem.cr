@@ -17,6 +17,7 @@
 - **Breaking:** remove `Chain#sort_residues!`. Use `Structure#reorder_by_topology`.
 - **Breaking:** `AtomView#to_a`, `ResidueView#to_a`, and `ChainView#to_a` return a copy of the enclosed array. Use `#to_unsafe` for the inner array.
 - `Chain` is comparable by id.
+- **Breaking:** `Atom#name` is now nilable. `Atom.new` requires a structure, element, and position. With a residue, name is required and element may be omitted (guessed from the name): `Atom.new(residue, "CA", pos)`. Serial number defaults to 1-based insertion order.
 
 #### Input/output
 

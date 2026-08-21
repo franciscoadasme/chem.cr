@@ -381,8 +381,8 @@ describe Chem::Structure do
 
     it "deletes by identity when atom numbers collide" do
       struc = Chem::Structure.new
-      a = Chem::Atom.new struc, 1, Chem::PeriodicTable::C, "C1", vec3(0, 0, 0)
-      b = Chem::Atom.new struc, 1, Chem::PeriodicTable::O, "O1", vec3(1, 0, 0)
+      a = Chem::Atom.new struc, Chem::PeriodicTable::C, vec3(0, 0, 0), name: "C1", number: 1
+      b = Chem::Atom.new struc, Chem::PeriodicTable::O, vec3(1, 0, 0), name: "O1", number: 1
       struc.delete b
       struc.atoms.to_a.should eq [a]
     end

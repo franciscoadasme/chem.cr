@@ -65,7 +65,11 @@ module Chem
 
     def atom(name : String, number : Int32, pos : Spatial::Vec3, element : Element, **options) : Atom
       @atom_number = number
-      Atom.new(@structure, @atom_number, element, name, pos, **options.merge({residue: @residue}))
+      Atom.new(@structure, element, pos, **options.merge({
+        name:    name,
+        number:  @atom_number,
+        residue: @residue,
+      }))
         .tap { |atom| @atom_map[atom.number] = atom }
     end
 

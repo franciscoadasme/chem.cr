@@ -181,7 +181,7 @@ module Chem::XYZ
         when "mass"
           io.printf "%8.4f", atom.mass
         when "name"
-          io.printf "%-4s", atom.name
+          io.printf "%-4s", atom.name? || ""
         when "occupancy"
           io.printf "%6.2f", atom.occupancy
         when "partial_charge"

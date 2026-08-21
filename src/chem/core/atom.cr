@@ -7,7 +7,9 @@ module Chem
     property pos : Spatial::Vec3
     property element : Element
     property formal_charge : Int32 = 0
-    property name : String
+    # Atom name. Raises if unset. Use `#name?` when the atom may have
+    # been created without a name (no topology).
+    getter! name : String
     property mass : Float64
     property occupancy : Float64 = 1
     property partial_charge : Float64 = 0.0
@@ -16,6 +18,9 @@ module Chem
     # Parent residue. Raises if the atom is not in a residue. Use
     # `#residue?` when hierarchy may be absent.
     getter! residue : Residue
+    # Serial number (PDB-style id). Independent of the atom's index in
+    # `Structure#atoms`. Assigned as 1-based insertion order when
+    # omitted.
     property number : Int32
     property temperature_factor : Float64 = 0
     # Atom typename. Usually specifies the atomic parameter set assigned
@@ -40,12 +45,19 @@ module Chem
     delegate x, y, z, to: @pos
     delegate atomic_number, covalent_radius, heavy?, max_valence, valence_electrons, to: @element
 
+    # Creates an atom in *structure* with the given *element* and
+    # coordinates.
+    #
+    # *name* belongs with topology: pass it together with *residue*.
+    # *number* defaults to the next 1-based insertion index.
     def initialize(
       @structure : Structure,
-      @number : Int32,
       @element : Element,
-      @name : String,
       @pos : Spatial::Vec3,
+      *,
+      @name : String? = nil,
+      number : Int32? = nil,
+      residue : Residue? = nil,
       @typename : String? = nil,
       @formal_charge : Int32 = 0,
       @mass : Float64 = element.mass,
@@ -53,25 +65,26 @@ module Chem
       @partial_charge : Float64 = 0.0,
       @temperature_factor : Float64 = 0,
       @vdw_radius : Float64 = element.vdw_radius,
-      residue : Residue? = nil,
     )
       raise ArgumentError.new("Negative mass") if @mass < 0
       raise ArgumentError.new("Negative vdW radius") if @vdw_radius < 0
+      @number = number || @structure.atoms.size + 1
       @residue = residue
       @structure << self
       residue.try &.<<(self)
     end
 
-    # Creates an atom in *residue* (and its parent structure).
+    # Creates an atom in *residue* (and its parent structure). The
+    # element is guessed from *name* unless *element* is given.
     def self.new(
       residue : Residue,
-      number : Int32,
-      element : Element,
       name : String,
       pos : Spatial::Vec3,
+      element : Element? = nil,
       **options,
     ) : self
-      new(residue.structure, number, element, name, pos, **options, residue: residue)
+      new(residue.structure, element || Structure.guess_element(name), pos,
+        **options.merge({name: name, residue: residue}))
     end
 
     # Returns the parent chain. Raises if the atom has no residue.
@@ -159,7 +172,7 @@ module Chem
     # Returns `true` if the atom name matches the given pattern, else
     # `false`.
     def matches?(pattern : Regex) : Bool
-      @name.matches? pattern
+      @name.try(&.matches?(pattern)) || false
     end
 
     # Returns `true` if the atom's element equals the given element,
@@ -183,7 +196,7 @@ module Chem
     # Returns `true` if the atom name is included in the given
     # names, else `false`.
     def matches?(names : Enumerable(String)) : Bool
-      @name.in? names
+      @name.try(&.in?(names)) || false
     end
 
     # Returns `true` if the atom matches the given template, else
@@ -202,6 +215,18 @@ module Chem
       @name == atom_t.name && @element == atom_t.element
     end
 
+    # Assigns the atom name. Raises if *name* is `nil` and the atom
+    # belongs to a residue.
+    def name=(name : String?) : String?
+      if name.nil? && @residue
+        raise ArgumentError.new("Atom in a residue must have a name")
+      end
+      if (residue = @residue) && (new_name = name) && @name != new_name
+        residue.update_atom_name self, @name, new_name
+      end
+      @name = name
+    end
+
     def missing_valence : Int32
       (target_valence - valence).clamp 0..
     end
@@ -218,6 +243,9 @@ module Chem
       return new_res if @residue.same?(new_res)
       unless new_res.structure.same?(@structure)
         raise ArgumentError.new("Residue does not belong to the atom's structure")
+      end
+      unless @name
+        raise ArgumentError.new("Atom in a residue must have a name")
       end
       @residue.try &.delete(self)
       @residue = new_res
@@ -244,7 +272,7 @@ module Chem
         residue.spec io
         io << ':'
       end
-      io << @name << '(' << @number << ')'
+      io << (@name || @element.symbol) << '(' << @number << ')'
     end
 
     # Returns the target valence based on the effective valence. This is
@@ -319,7 +347,9 @@ module Chem
     end
 
     private def copy_to(structure : Structure, residue : Residue?) : self
-      atom = Atom.new(structure, @number, @element, @name, @pos,
+      atom = Atom.new(structure, @element, @pos,
+        name: @name,
+        number: @number,
         typename: @typename,
         formal_charge: @formal_charge,
         mass: @mass,

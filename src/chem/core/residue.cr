@@ -73,8 +73,9 @@ class Chem::Residue
   end
 
   protected def <<(atom : Atom) : self
+    name = atom.name? || raise ArgumentError.new("Atom in a residue must have a name")
     @atoms << atom
-    @atom_table[atom.name] = atom
+    @atom_table[name] = atom
     self
   end
 
@@ -384,7 +385,9 @@ class Chem::Residue
   def delete(atom : Atom) : Atom?
     return unless i = @atoms.index &.same?(atom)
     @atoms.delete_at i
-    @atom_table.delete(atom.name) if @atom_table[atom.name]?.same?(atom)
+    if name = atom.name?
+      @atom_table.delete(name) if @atom_table[name]?.same?(atom)
+    end
     atom
   end
 
@@ -772,7 +775,19 @@ class Chem::Residue
     @atom_table.clear
     @atoms.sort_by! &.number
     @atoms.each do |atom|
-      @atom_table[atom.name] = atom
+      if name = atom.name?
+        @atom_table[name] = atom
+      end
     end
+  end
+
+  # Updates the name lookup after `Atom#name=` changes.
+  protected def update_atom_name(
+    atom : Atom,
+    old_name : String?,
+    new_name : String,
+  ) : Nil
+    @atom_table.delete(old_name) if old_name && @atom_table[old_name]?.same?(atom)
+    @atom_table[new_name] = atom
   end
 end
