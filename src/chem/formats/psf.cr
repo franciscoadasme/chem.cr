@@ -62,7 +62,7 @@ module Chem::PSF
       if prev_seg && segment != prev_seg
         chain = Chain.new(struc, chain.succ_id)
       end
-      residue = chain[resid]? || Residue.new(chain, resid, resname)
+      residue = chain.dig?(resid) || Residue.new(chain, resid, resname)
       Atom.new(residue, name, Spatial::Vec3.zero,
         number: number,
         typename: typename,

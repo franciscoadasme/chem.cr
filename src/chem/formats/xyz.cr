@@ -103,12 +103,12 @@ module Chem::XYZ
       end
 
       if ch = chain_id
-        chain = struc[ch]? || Chain.new(struc, ch)
+        chain = struc.dig?(ch) || Chain.new(struc, ch)
       end
       if i = resid
         chain ||= Chain.new(struc, 'A')
         ele_index.clear
-        residue = chain[i]? || Residue.new(chain, i, resname || "UNK")
+        residue = chain.dig?(i) || Residue.new(chain, i, resname || "UNK")
       elsif resname && residue.try(&.name) != resname
         chain ||= Chain.new(struc, 'A')
         ele_index.clear

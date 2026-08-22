@@ -54,7 +54,7 @@ module Chem::Mol2
             resname = pull.next_s
             # TODO: respect name or truncate at 4 characters?
             chain ||= Chain.new(struc, Chain.succ_id)
-            residue = chain[resid]? || Residue.new(chain, resid, resname[..2])
+            residue = chain.dig?(resid) || Residue.new(chain, resid, resname[..2])
             chg = pull.next_f if include_charges
           end
           if residue
