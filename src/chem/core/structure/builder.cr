@@ -106,7 +106,9 @@ module Chem
     end
 
     def build : Structure
-      kekulize
+      if bonds = @aromatic_bonds
+        Chem.kekulize(bonds)
+      end
       @structure.apply_templates if @use_templates
 
       if @guess_bonds
@@ -242,78 +244,6 @@ module Chem
 
     private def next_residue(name : String = "UNK") : Residue
       residue name, (chain.residues.max_of?(&.number) || 0) + 1
-    end
-
-    # Kekulizes bonds marked as aromatic. Raises an exception when bonds
-    # could not be kekulized.
-    #
-    # Kekulization is the process of assigning double bonds to fill the
-    # Lewis structure of the aromatic atoms. Different bond orderings
-    # may produce distinct but valid Kekule forms. This procedure
-    # requires that all atoms have explicit hydrogens such that unfilled
-    # valence is due to missing double bonds only, otherwise it will
-    # produce incorrect chemical structures or even fail.
-    #
-    # This method first groups aromatic bonds by their connectivity.
-    # Then, each bond subset (ring) is kekulized independently.
-    # Alternating double bonds starting from a root bond are assigned
-    # based on the connectivity tree, which is traversed using the
-    # iterative breadth-first search (BFS) algorithm. Different root
-    # bonds are tested until a valid Kekule form is found. Otherwise, an
-    # exception is raised.
-    private def kekulize : Nil
-      return unless bonds = @aromatic_bonds
-
-      grouped_bonds = [] of Array(Bond)
-      until bonds.empty?
-        group = [bonds.pop]
-        until (bonded = bonds.select { |bond| group.any?(&.bonded?(bond)) }).empty?
-          group.concat bonded
-          bonds.reject! &.in?(bonded)
-        end
-        grouped_bonds << group
-      end
-
-      grouped_bonds.each do |bonds|
-        ctab = Hash(Bond, Array(Bond)).new { |hash, key| hash[key] = [] of Bond }
-        bonds.each_with_index do |bond, i|
-          bonds.each(within: (i + 1)..) do |other|
-            next unless other.bonded?(bond)
-            ctab[bond] << other
-            ctab[other] << bond
-          end
-        end
-
-        changeable = bonds.select(&.atoms.any?(&.missing_valence.>(0))).to_set
-        kekulized = false
-        subbonds = [] of Bond
-        visited = Set(Bond).new bonds.size
-        bonds.size.times do |i|
-          next unless bonds[i].in?(changeable)
-
-          subbonds << bonds[i]
-          until subbonds.empty?
-            bond = subbonds.pop
-            next if bond.in?(visited)
-            bond.order = :double if bond.in?(changeable) && ctab[bond].all?(&.single?)
-            visited << bond
-            ctab[bond].each do |other|
-              subbonds << other unless other.in?(visited)
-            end
-          end
-
-          if bonds.all? &.atoms.all? { |atom| atom.target_valence == atom.valence }
-            kekulized = true
-            break
-          end
-
-          bonds.each &.order=(:single)
-          subbonds.clear
-          visited.clear
-        end
-
-        raise "Could not kekulize aromatic ring" unless kekulized
-      end
     end
   end
 end

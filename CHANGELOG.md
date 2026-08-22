@@ -19,6 +19,7 @@
 - `Chain` is comparable by id.
 - Add `Chain.succ_id` for the next alphanumeric chain identifier (`A`–`Z`, `a`–`z`, `0`–`9`).
 - **Breaking:** `Atom#name` is now nilable. `Atom.new` requires a structure, element, and position. With a residue, name is required and element may be omitted (guessed from the name): `Atom.new(residue, "CA", pos)`. Serial number defaults to 1-based insertion order.
+- Add `Chem.kekulize` to assign Kekulé bond orders to aromatic bonds. `Structure::Builder` calls it during `#build`.
 
 #### Input/output
 
