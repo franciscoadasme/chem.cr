@@ -28,6 +28,7 @@
 - **Breaking:** XYZ, POSCAR, Cube, Gen, and JDFTx readers construct `Structure` and `Atom` directly. They no longer invent atom names via `Structure::Builder`; names come from `guess_names` or explicit fields (extended XYZ).
 - MOL (and SDF) readers construct `Structure` and `Atom` directly. Atom names are invented only when the title is used as a residue name.
 - MOL2 reader constructs topology objects directly instead of using `Structure::Builder`. Residue and atom names come from the file; residue is carried forward when subst columns are missing.
+- PDB reader constructs topology objects directly instead of using `Structure::Builder`.
 
 ## [v0.6.0] - 2023-08-09
 

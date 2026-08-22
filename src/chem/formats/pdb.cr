@@ -87,21 +87,18 @@ module Chem::PDB
       when "ATOM  ", "HETATM", "MODEL "
         pull.consume_line if pull.at(0, 6).str == "MODEL "
 
-        builder = Structure::Builder.new(
-          guess_bonds: guess_bonds,
-          guess_names: false,
-          source_file: (file = io).is_a?(File) ? file.path : nil,
-          use_templates: true,
-        )
-        builder.title info.title
-        builder.cell info.cell
-        builder.expt info.experiment
+        source_file = (file = io).is_a?(File) ? file.path : nil
+        struc = Structure.new(source_file)
+        struc.title = info.title
+        struc.cell = info.cell
+        struc.experiment = info.experiment
 
         pdb_bonds = Hash(Tuple(Int32, Int32), BondOrder).new BondOrder::Zero
         alt_locs = Hash(Residue, Array(AlternateLocation)).new do |hash, key|
           hash[key] = Array(AlternateLocation).new 4
         end
         chains_set = chains.is_a?(Enumerable) ? chains.to_set : chains
+        chain = nil.as(Chain?)
 
         pull.each_line do
           case pull.at?(0, 6).str?
@@ -115,7 +112,7 @@ module Chem::PDB
             chid = pull.at(21).char
             case chains_set
             when Set     then next unless chid.in?(chains_set)
-            when "first" then next if chid != (builder.current_chain.try(&.id) || chid)
+            when "first" then next if chid != (chain.try(&.id) || chid)
             end
 
             atom_name = pull.at(12, 4).str.strip
@@ -128,11 +125,15 @@ module Chem::PDB
                     Structure.guess_element?(atom_name) || pull.error("Could not guess element")
                   end
 
-            builder.chain chid if chid.alphanumeric?
+            if chid.alphanumeric?
+              chain = struc.dig?(chid) || Chain.new(struc, chid)
+            else
+              chain ||= Chain.new(struc, Chain.succ_id)
+            end
             resnum = read_serial(pull, 22, 4)
             inscode = pull.at(26).char.presence
             resname = pull.at(17, 4).str.strip
-            residue = builder.residue resname, resnum, inscode
+            residue = chain.dig?(resnum, inscode) || Residue.new(chain, resnum, inscode, resname)
 
             pull.error "Found different name #{resname.inspect} for #{residue}" if alt_loc_char.nil? && resname != residue.name
 
@@ -140,14 +141,16 @@ module Chem::PDB
             y = pull.at(38, 8).float
             z = pull.at(46, 8).float
             formal_charge = pull.at?(78, 2).str?.presence.try { |str| str.reverse.to_i? || pull.error("Invalid formal charge") }
-            atom = builder.atom \
+            atom = Atom.new(
+              residue,
               atom_name,
-              read_serial(pull, 6, 5),
               Spatial::Vec3.new(x, y, z),
               element: ele,
+              number: read_serial(pull, 6, 5),
               formal_charge: formal_charge || 0,
               occupancy: occupancy,
-              temperature_factor: pull.at?(60, 6).float(if_blank: 0)
+              temperature_factor: pull.at?(60, 6).float(if_blank: 0),
+            )
 
             if !alt_loc && alt_loc_char
               loc = alt_locs[atom.residue].find &.id.==(alt_loc_char)
@@ -186,12 +189,39 @@ module Chem::PDB
             residue.reset_cache
           end
         end
-        builder.bonds pdb_bonds unless pdb_bonds.empty?
+        unless pdb_bonds.empty?
+          atom_table = {} of Int32 => Atom
+          serials = Set(Int32).new pdb_bonds.size * 2
+          pdb_bonds.each_key { |(i, j)| serials << i << j }
+          struc.atoms.each do |atom|
+            atom_table[atom.number] = atom if atom.number.in?(serials)
+          end
+          pdb_bonds.each do |(i, j), order|
+            if (lhs = atom_table[i]?) && (rhs = atom_table[j]?)
+              lhs.bonds.add rhs, order
+            end
+          end
+        end
         info.sec_records.each do |sec|
-          builder.secondary_structure sec.begin, sec.end, sec.type
+          next unless (ri = struc.dig?(*sec.begin)) && (rj = struc.dig?(*sec.end))
+          struc.residues.each do |residue|
+            residue.sec = sec.type if ri <= residue <= rj
+          end
         end
 
-        return builder.build
+        struc.apply_templates
+        if guess_bonds
+          # skip bond order and formal charge assignment if a protein
+          # chain has missing hydrogens (very common in PDB)
+          include_h = !struc.residues.any? do |residue|
+            residue.protein? && !residue.atoms.any?(&.hydrogen?)
+          end
+          struc.guess_bonds perceive_order: include_h
+          struc.guess_formal_charges if include_h
+        end
+        struc.guess_unknown_residue_types
+
+        return struc
       when "END   ", "MASTER"
         break
       end
