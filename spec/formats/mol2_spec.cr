@@ -51,6 +51,8 @@ describe Chem::Mol2 do
       struc = Chem::Mol2.read path
       struc.source_file.should eq path.expand
       struc.title.should eq "Histidine"
+      struc.chains.should be_empty
+      struc.residues.should be_empty
 
       atoms = struc.atoms
       atoms.size.should eq 20

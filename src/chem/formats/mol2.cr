@@ -31,72 +31,78 @@ module Chem::Mol2
     include_charges = pull.next_s != "NO_CHARGES"
     pull.consume_line
 
-    struc = Structure.build(
-      guess_bonds: false,
-      guess_names: false,
-      source_file: (file = pull.io).is_a?(File) ? file.path : nil,
-      use_templates: false,
-    ) do |builder|
-      builder.title title
-      pull.each_line do
-        case pull.str? || pull.next_s?
-        when "@<TRIPOS>ATOM"
-          n_atoms.times do
-            pull.consume_line
-            number = pull.next_i
-            name = pull.next_s
-            pos = Spatial::Vec3[pull.next_f, pull.next_f, pull.next_f]
-            atom_t = pull.next_s
-            symbol = atom_t[...atom_t.index('.')] # ignore sybyl type
-            element = PeriodicTable[symbol]? || pull.error("Unknown element")
-            unless pull.consume_token.eol?
-              resid = pull.int
-              resname = pull.next_s
-              # TODO: respect name or truncate at 4 characters?
-              builder.residue resname[..2], resid
-              chg = pull.next_f if include_charges
-            end
-            builder.atom name, pos, element: element, partial_charge: (chg || 0.0)
-          end
-        when "@<TRIPOS>BOND"
-          n_bonds.times do
-            pull.consume_line
-            pull.consume_token # skip bond index
-            i = pull.next_i
-            j = pull.next_i
-            case bond_t = pull.next_s
-            when "1", "2", "3"
-              builder.bond i, j, BondOrder.from_value(bond_t.to_i)
-            when "ar"
-              builder.bond i, j, aromatic: true
-            when "am", "du"
-              builder.bond i, j
-            end
-          end
-        when "@<TRIPOS>CRYSIN"
+    source_file = (file = io).is_a?(File) ? file.path : nil
+    struc = Structure.new(source_file)
+    struc.title = title
+    chain = nil
+    residue = nil
+    aromatic = [] of Bond
+    pull.each_line do
+      case pull.str? || pull.next_s?
+      when "@<TRIPOS>ATOM"
+        n_atoms.times do
           pull.consume_line
-          x = pull.next_f
-          pull.error "Invalid size" unless x > 0
-          y = pull.next_f
-          pull.error "Invalid size" unless y > 0
-          z = pull.next_f
-          pull.error "Invalid size" unless z > 0
-          alpha = pull.next_f
-          pull.error "Invalid angle" unless 0 < alpha <= 180
-          beta = pull.next_f
-          pull.error "Invalid angle" unless 0 < beta <= 180
-          gamma = pull.next_f
-          pull.error "Invalid angle" unless 0 < gamma <= 180
-          builder.cell Spatial::Parallelepiped.new({x, y, z}, {alpha, beta, gamma})
-        when "@<TRIPOS>MOLECULE"
-          # FIXME: hack such that the next call to read can start at this line
-          if line = pull.line
-            io.pos -= line.bytesize + 1
+          pull.next_i # atom id (1-based file order)
+          name = pull.next_s
+          pos = Spatial::Vec3[pull.next_f, pull.next_f, pull.next_f]
+          atom_t = pull.next_s
+          symbol = atom_t[...atom_t.index('.')] # ignore sybyl type
+          element = PeriodicTable[symbol]? || pull.error("Unknown element")
+          chg = 0.0
+          unless pull.consume_token.eol?
+            resid = pull.int
+            resname = pull.next_s
+            # TODO: respect name or truncate at 4 characters?
+            chain ||= Chain.new(struc, Chain.succ_id)
+            residue = chain[resid]? || Residue.new(chain, resid, resname[..2])
+            chg = pull.next_f if include_charges
           end
-          break
+          if residue
+            Atom.new(residue, name, pos, element: element, partial_charge: chg)
+          else
+            Atom.new(struc, element, pos, name: name, partial_charge: chg)
+          end
         end
+      when "@<TRIPOS>BOND"
+        n_bonds.times do
+          pull.consume_line
+          pull.consume_token # skip bond index
+          i = pull.next_i
+          j = pull.next_i
+          atoms = struc.atoms
+          case bond_t = pull.next_s
+          when "1", "2", "3"
+            atoms[i - 1].bonds.add atoms[j - 1], BondOrder.from_value(bond_t.to_i)
+          when "ar"
+            aromatic << atoms[i - 1].bonds.add(atoms[j - 1])
+          when "am", "du"
+            atoms[i - 1].bonds.add atoms[j - 1]
+          end
+        end
+      when "@<TRIPOS>CRYSIN"
+        pull.consume_line
+        x = pull.next_f
+        pull.error "Invalid size" unless x > 0
+        y = pull.next_f
+        pull.error "Invalid size" unless y > 0
+        z = pull.next_f
+        pull.error "Invalid size" unless z > 0
+        alpha = pull.next_f
+        pull.error "Invalid angle" unless 0 < alpha <= 180
+        beta = pull.next_f
+        pull.error "Invalid angle" unless 0 < beta <= 180
+        gamma = pull.next_f
+        pull.error "Invalid angle" unless 0 < gamma <= 180
+        struc.cell = Spatial::Parallelepiped.new({x, y, z}, {alpha, beta, gamma})
+      when "@<TRIPOS>MOLECULE"
+        # FIXME: hack such that the next call to read can start at this line
+        if line = pull.line
+          io.pos -= line.bytesize + 1
+        end
+        break
       end
     end
+    Chem.kekulize(aromatic)
     struc.guess_formal_charges
     struc
   end
