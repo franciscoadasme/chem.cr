@@ -35,6 +35,13 @@ describe Chem::Mol do
       structure.atoms[2].mass.should eq 14
       structure.residues.map(&.name).should eq ["702"]
     end
+
+    it "leaves atoms nameless when the title is not a residue name" do
+      struc = Chem::Mol.read spec_file("5my.mol")
+      struc.chains.should be_empty
+      struc.residues.should be_empty
+      struc.atoms.all?(&.name?.nil?).should be_true
+    end
   end
 
   describe ".write" do

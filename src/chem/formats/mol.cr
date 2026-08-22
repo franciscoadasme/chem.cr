@@ -44,27 +44,22 @@ module Chem::Mol
       end
     end
 
-    structure = Structure.build(
-      guess_bonds: false,
-      guess_names: false,
-      source_file: (file = io).is_a?(File) ? file.path : nil,
-      use_templates: false,
-    ) do |builder|
-      if title.matches?(/^[A-Z0-9]{3,4}$/)
-        builder.title comment || ""
-        builder.residue title
-      else
-        builder.title title
-      end
-      variant.parse pull, builder
+    source_file = (file = io).is_a?(File) ? file.path : nil
+    struc = Structure.new(source_file)
+    if title.matches?(/^[A-Z0-9]{3,4}$/)
+      struc.title = comment || ""
+      Residue.new(Chain.new(struc, Chain.succ_id), 1, title)
+    else
+      struc.title = title
     end
+    variant.parse pull, struc
 
-    if structure.atoms.all?(&.z.zero?) # non-3D
+    if struc.atoms.all?(&.z.zero?) # non-3D
       path = (file = io).is_a?(File) ? "file #{file.path}" : "content"
       Log.warn { "Detected non-3D molecule in MOL #{path}" }
     end
 
-    structure
+    struc
   end
 
   define_file_overload(Mol, read)
@@ -166,17 +161,19 @@ module Chem::Mol
       io.puts "M  END"
     end
 
-    def self.parse(pull : PullParser, builder : Structure::Builder) : Nil
+    def self.parse(pull : PullParser, struc : Structure) : Nil
       n_atoms = pull.at(0, 3).int "Invalid number of atoms %{token}"
       n_bonds = pull.at(3, 3).int "Invalid number of bonds %{token}"
       pull.consume_line
 
-      n_atoms.times { parse_atom(pull, builder) }
-      n_bonds.times { parse_bond(pull, builder) }
-      parse_property_block(pull, builder)
+      aromatic = [] of Bond
+      n_atoms.times { parse_atom(pull, struc) }
+      n_bonds.times { parse_bond(pull, struc, aromatic) }
+      parse_property_block(pull, struc)
+      Chem.kekulize(aromatic)
     end
 
-    def self.parse_atom(pull : PullParser, builder : Structure::Builder) : Nil
+    def self.parse_atom(pull : PullParser, struc : Structure) : Nil
       x = pull.at(0, 10).float "Invalid X coordinate %{token}"
       y = pull.at(10, 10).float "Invalid Y coordinate %{token}"
       z = pull.at(20, 10).float "Invalid Z coordinate %{token}"
@@ -190,25 +187,31 @@ module Chem::Mol
         .parse_if_present("Invalid formal charge %{token}", default: 0) do |str|
           str.to_i?.try { |chg_index| FORMAL_CHARGE_MAP[chg_index]? }
         end
-      builder.atom ele, pos, formal_charge: chg, mass: mass
+      if residue = struc.chains.first?.try(&.residues.first?)
+        name = "#{ele.symbol}#{residue.atoms.count(&.element.==(ele)) + 1}"
+        Atom.new(residue, name, pos, element: ele, formal_charge: chg, mass: mass)
+      else
+        Atom.new(struc, ele, pos, formal_charge: chg, mass: mass)
+      end
       pull.consume_line
     end
 
-    def self.parse_bond(pull : PullParser, builder : Structure::Builder) : Nil
+    def self.parse_bond(pull : PullParser, struc : Structure, aromatic : Array(Bond)) : Nil
       i = pull.at(0, 3).int("Invalid atom index %{token}")
       j = pull.at(3, 3).int("Invalid atom index %{token}")
+      atoms = struc.atoms
       pull.at(6, 3).parse("Invalid bond type %{token}") do |str|
         case bond_type = str.strip
         when "1", "2", "3"
-          builder.bond i, j, BondOrder.from_value(bond_type.to_i)
+          atoms[i - 1].bonds.add atoms[j - 1], BondOrder.from_value(bond_type.to_i)
         when "4"
-          builder.bond i, j, aromatic: true
+          atoms[i - 1].bonds.add(atoms[j - 1]).tap { |bond| aromatic << bond }
         end
       end
       pull.consume_line
     end
 
-    def self.parse_property_block(pull : PullParser, builder : Structure::Builder) : Nil
+    def self.parse_property_block(pull : PullParser, struc : Structure) : Nil
       pull.each_line do
         next unless pull.at?(0, 3).str? == "M  "
 
@@ -221,7 +224,7 @@ module Chem::Mol
         n_entries.times do |i|
           col = 9 + i * 8
           atom_i = pull.at(col, 4).int "Invalid atom index"
-          atom = builder.atom?(atom_i) || pull.error("Atom index #{atom_i} out of range")
+          atom = struc.atoms[atom_i - 1]? || pull.error("Atom index #{atom_i} out of range")
           pull.at(col + 4, 4)
           case property_name
           when "CHG"
@@ -309,9 +312,10 @@ module Chem::Mol
       end
     end
 
-    def self.parse(pull : PullParser, builder : Structure::Builder) : Nil
+    def self.parse(pull : PullParser, struc : Structure) : Nil
       pull.consume_line # skips V2000 compatibility line
       n_atoms = n_bonds = 0
+      aromatic = [] of Bond
       while name = next_block(pull)
         case name
         when "CTAB"
@@ -320,18 +324,19 @@ module Chem::Mol
           n_bonds = pull.next_i "Invalid number of bonds %{token}"
           pull.consume_line
         when "ATOM"
-          n_atoms.times { parse_atom(pull, builder) }
+          n_atoms.times { parse_atom(pull, struc) }
           check_block_close pull, "ATOM"
         when "BOND"
-          n_bonds.times { parse_bond(pull, builder) }
+          n_bonds.times { parse_bond(pull, struc, aromatic) }
           check_block_close pull, "BOND"
         end
       end
+      Chem.kekulize(aromatic)
     end
 
-    def self.parse_atom(pull : PullParser, builder : Structure::Builder) : Nil
+    def self.parse_atom(pull : PullParser, struc : Structure) : Nil
       check_entry_tag(pull)
-      number = pull.next_i "Invalid atom number %{token}"
+      pull.next_i "Invalid atom number %{token}"
       ele = pull.parse_next("Invalid element %{token}") do |str|
         PeriodicTable[str]?
       end
@@ -353,28 +358,34 @@ module Chem::Mol
         end
       end
 
-      builder.atom(ele, pos, formal_charge: chg, mass: mass)
+      if residue = struc.chains.first?.try(&.residues.first?)
+        name = "#{ele.symbol}#{residue.atoms.count(&.element.==(ele)) + 1}"
+        Atom.new(residue, name, pos, element: ele, formal_charge: chg, mass: mass)
+      else
+        Atom.new(struc, ele, pos, formal_charge: chg, mass: mass)
+      end
       pull.consume_line
     end
 
-    def self.parse_bond(pull : PullParser, builder : Structure::Builder) : Nil
+    def self.parse_bond(pull : PullParser, struc : Structure, aromatic : Array(Bond)) : Nil
       check_entry_tag(pull)
       pull.consume_token # ignore index
 
-      aromatic = false
+      is_aromatic = false
       bond_order = pull.parse_next("Invalid bond type %{token}") do |str|
         case bond_type = str
         when "1", "2", "3"
           BondOrder.from_value(bond_type.to_i)
         when "4"
-          aromatic = true
+          is_aromatic = true
           BondOrder::Single
         end
       end
 
       i = pull.next_i("Invalid atom index %{token}")
       j = pull.next_i("Invalid atom index %{token}")
-      builder.bond i, j, bond_order, aromatic: aromatic
+      bond = struc.atoms[i - 1].bonds.add(struc.atoms[j - 1], bond_order)
+      aromatic << bond if is_aromatic
       pull.consume_line
     end
   end
