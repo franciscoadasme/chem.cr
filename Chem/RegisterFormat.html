@@ -77,11 +77,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem/Chem/Angle" data-name="chem::angle">
-      <a href="../Chem/Angle.html">Angle</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Atom" data-name="chem::atom">
       <a href="../Chem/Atom.html">Atom</a>
       
@@ -127,11 +122,6 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/Connectivity" data-name="chem::connectivity(t)">
-      <a href="../Chem/Connectivity.html">Connectivity</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Cube" data-name="chem::cube">
       <a href="../Chem/Cube.html">Cube</a>
       
@@ -154,11 +144,6 @@
   
 </ul>
 
-      
-    </li>
-  
-  <li class=" " data-id="chem/Chem/Dihedral" data-name="chem::dihedral">
-      <a href="../Chem/Dihedral.html">Dihedral</a>
       
     </li>
   
@@ -187,13 +172,13 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/Improper" data-name="chem::improper">
-      <a href="../Chem/Improper.html">Improper</a>
+  <li class=" " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
+      <a href="../Chem/JDFTx.html">JDFTx</a>
       
     </li>
   
-  <li class=" " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
-      <a href="../Chem/JDFTx.html">JDFTx</a>
+  <li class=" " data-id="chem/Chem/Maestro" data-name="chem::maestro">
+      <a href="../Chem/Maestro.html">Maestro</a>
       
     </li>
   
@@ -711,7 +696,9 @@ The <em>file format</em> is determined from the annotated type's name, where the
 The declared extensions and file patterns are used for format detection via <code><a href="../Chem.html#guess_format%28path%3APath%7CString%2Ctype%3AChem%3A%3ASpatial%3A%3AGrid.class%29%3AChem%3A%3ACube.class%7CChem%3A%3ADX.class%7CChem%3A%3AGOpenMol.class%7CChem%3A%3AVASP%3A%3AChgcar.class%7CChem%3A%3AVASP%3A%3ALocpot.class-class-method">Chem.guess_format</a></code>.</p>
 <p>The annotation accepts the following named arguments:</p>
 <ul>
-<li><strong>ext</strong>: an array of extensions (including leading dot).</li>
+<li><strong>ext</strong>: an array of extensions (including leading dot). Multi-part
+extensions such as <code>.mae.gz</code> are allowed. Matching is a
+case-insensitive suffix of the filename; longer extensions win.</li>
 <li><strong>names</strong>: an array of file patterns.
 The pattern syntax is similar to shell filename globbing and it is evaluated via <code>File.match?</code> to match against a filepath.</li>
 </ul>
@@ -863,7 +850,7 @@ If two methods with the same name and required arguments (may have different opt
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L158" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L160" target="_blank">
         chem/register_format.cr
       </a>
     

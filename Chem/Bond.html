@@ -77,11 +77,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem/Chem/Angle" data-name="chem::angle">
-      <a href="../Chem/Angle.html">Angle</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Atom" data-name="chem::atom">
       <a href="../Chem/Atom.html">Atom</a>
       
@@ -127,11 +122,6 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/Connectivity" data-name="chem::connectivity(t)">
-      <a href="../Chem/Connectivity.html">Connectivity</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Cube" data-name="chem::cube">
       <a href="../Chem/Cube.html">Cube</a>
       
@@ -154,11 +144,6 @@
   
 </ul>
 
-      
-    </li>
-  
-  <li class=" " data-id="chem/Chem/Dihedral" data-name="chem::dihedral">
-      <a href="../Chem/Dihedral.html">Dihedral</a>
       
     </li>
   
@@ -187,13 +172,13 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/Improper" data-name="chem::improper">
-      <a href="../Chem/Improper.html">Improper</a>
+  <li class=" " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
+      <a href="../Chem/JDFTx.html">JDFTx</a>
       
     </li>
   
-  <li class=" " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
-      <a href="../Chem/JDFTx.html">JDFTx</a>
+  <li class=" " data-id="chem/Chem/Maestro" data-name="chem::maestro">
+      <a href="../Chem/Maestro.html">Maestro</a>
       
     </li>
   
@@ -707,28 +692,13 @@
     Overview
   </h2>
 
-  <p>A <code><a href="../Chem/Bond.html">Bond</a></code> provides a canonical representation of a covalent bond
-between two atoms.</p>
+  <p>A covalent bond between two atoms.</p>
 
 
 
 
 
 
-
-  <h2>
-    <a id="included-modules" class="anchor" href="#included-modules">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Included Modules
-  </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="../Chem/Connectivity.html">Chem::Connectivity</a>({<a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>})</li>
-    
-  </ul>
 
 
 
@@ -749,8 +719,8 @@ between two atoms.</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L116" target="_blank">
-        chem/connectivity.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L56" target="_blank">
+        chem/core/bond.cr
       </a>
     
     <br/>
@@ -797,6 +767,18 @@ between two atoms.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
+        <a href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method" class="signature"><strong>#==</strong>(rhs : <span class="k">self</span>) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this reference is the same as <em>other</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#atoms%3ATuple%28Atom%2CAtom%29-instance-method" class="signature"><strong>#atoms</strong> : Tuple(Atom, Atom)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#bonded%3F%28other%3Aself%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>) : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the bond shares an atom with <em>other</em>, else <code>false</code>.</p></div>
@@ -810,6 +792,13 @@ between two atoms.</p>
     
       <li class="entry-summary">
         <a href="#double%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#double?</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#includes%3F%28atom%3AAtom%29%3ABool-instance-method" class="signature"><strong>#includes?</strong>(atom : Atom) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the bond includes <em>atom</em>, else <code>false</code>.</p></div>
         
       </li>
     
@@ -830,7 +819,7 @@ between two atoms.</p>
       <li class="entry-summary">
         <a href="#measure%3AFloat64-instance-method" class="signature"><strong>#measure</strong> : Float64</a>
         
-          <div class="summary"><p>Returns the current value of the bond in angstroms.</p></div>
+          <div class="summary"><p>Returns the bond length in angstroms.</p></div>
         
       </li>
     
@@ -896,66 +885,6 @@ between two atoms.</p>
     
       
 
-  <h3>Instance methods inherited from module <code><a href="../Chem/Connectivity.html">Chem::Connectivity</a>({<a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>})</code></h3>
-  
-  
-    <a href="../Chem/Connectivity.html#%3C%3D%3E%28rhs%3Aself%29%3AInt32-instance-method" class="tooltip">
-      <span><=>(rhs : <span class="k">self</span>) : Int32</span>
-    <=></a>, 
-    
-  
-    <a href="../Chem/Connectivity.html#atoms%3A%7BChem%3A%3AAtom%2CChem%3A%3AAtom%7D-instance-method" class="tooltip">
-      <span>atoms : {Chem::Atom, Chem::Atom}</span>
-    atoms</a>, 
-    
-  
-    <a href="../Chem/Connectivity.html#includes%3F%28atom%3AAtom%29%3ABool-instance-method" class="tooltip">
-      <span>includes?(atom : Atom) : Bool</span>
-    includes?</a>, 
-    
-  
-    <a href="../Chem/Connectivity.html#inspect%28io%3AIO%29%3ANil-instance-method" class="tooltip">
-      <span>inspect(io : IO) : Nil</span>
-    inspect</a>, 
-    
-  
-    <a href="../Chem/Connectivity.html#measure%3AFloat64-instance-method" class="tooltip">
-      <span>measure : Float64</span>
-    measure</a>, 
-    
-  
-    <a href="../Chem/Connectivity.html#to_s%28io%3AIO%29%3ANil-instance-method" class="tooltip">
-      <span>to_s(io : IO) : Nil</span>
-    to_s</a>
-    
-  
-
-
-      
-
-
-      
-
-
-      
-
-
-    
-      
-
-
-      
-
-
-      
-
-
-      
-
-
-    
-      
-
 
       
 
@@ -1008,7 +937,7 @@ between two atoms.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L123" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L62" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1029,6 +958,47 @@ between two atoms.</p>
     Instance Method Detail
   </h2>
   
+    <div class="entry-detail" id="==(rhs:self):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>==</strong>(rhs : <span class="k">self</span>) : Bool
+
+        <a class="method-permalink" href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class Reference
+            </div>
+          
+          <p>Returns <code>true</code> if this reference is the same as <em>other</em>. Invokes <code>same?</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L67" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="atoms:Tuple(Atom,Atom)-instance-method">
+      <div class="signature">
+        
+        def <strong>atoms</strong> : Tuple(<a href="../Chem/Atom.html">Atom</a>, <a href="../Chem/Atom.html">Atom</a>)
+
+        <a class="method-permalink" href="#atoms%3ATuple%28Atom%2CAtom%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L57" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="bonded?(other:self):Bool-instance-method">
       <div class="signature">
         
@@ -1046,7 +1016,7 @@ between two atoms.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L131" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L73" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1062,7 +1032,7 @@ between two atoms.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L120" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1078,7 +1048,28 @@ between two atoms.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L120" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L59" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="includes?(atom:Atom):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>includes?</strong>(atom : <a href="../Chem/Atom.html">Atom</a>) : Bool
+
+        <a class="method-permalink" href="#includes%3F%28atom%3AAtom%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the bond includes <em>atom</em>, else <code>false</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L78" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1111,7 +1102,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L135" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L82" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1128,14 +1119,14 @@ and the values of all instance variables.</p>
           
           <p>Returns <code>true</code> if the bond matches the given template, else
 <code>false</code>.</p>
-<p>Check considers both atom matching (see <code>Atom#match?</code>) and bond
+<p>Check considers both atom matching (see <code><a href="../Chem/Atom.html#matches%3F%28number%3AInt%29%3ABool-instance-method">Atom#matches?</a></code>) and bond
 order.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L148" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L95" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1150,13 +1141,13 @@ order.</p>
       
         <div class="doc">
           
-          <p>Returns the current value of the bond in angstroms.</p>
+          <p>Returns the bond length in angstroms.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L154" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L101" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1172,7 +1163,7 @@ order.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L119" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1188,7 +1179,7 @@ order.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L119" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1210,7 +1201,7 @@ included in the bond.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L160" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L107" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1226,7 +1217,7 @@ included in the bond.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L120" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1242,7 +1233,7 @@ included in the bond.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L120" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1274,7 +1265,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L171" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L118" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1290,7 +1281,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L120" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1306,7 +1297,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L120" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1322,7 +1313,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L120" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1338,7 +1329,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L120" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/bond.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>

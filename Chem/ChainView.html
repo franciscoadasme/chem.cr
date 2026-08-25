@@ -77,11 +77,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem/Chem/Angle" data-name="chem::angle">
-      <a href="../Chem/Angle.html">Angle</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Atom" data-name="chem::atom">
       <a href="../Chem/Atom.html">Atom</a>
       
@@ -127,11 +122,6 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/Connectivity" data-name="chem::connectivity(t)">
-      <a href="../Chem/Connectivity.html">Connectivity</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Cube" data-name="chem::cube">
       <a href="../Chem/Cube.html">Cube</a>
       
@@ -154,11 +144,6 @@
   
 </ul>
 
-      
-    </li>
-  
-  <li class=" " data-id="chem/Chem/Dihedral" data-name="chem::dihedral">
-      <a href="../Chem/Dihedral.html">Dihedral</a>
       
     </li>
   
@@ -187,13 +172,13 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/Improper" data-name="chem::improper">
-      <a href="../Chem/Improper.html">Improper</a>
+  <li class=" " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
+      <a href="../Chem/JDFTx.html">JDFTx</a>
       
     </li>
   
-  <li class=" " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
-      <a href="../Chem/JDFTx.html">JDFTx</a>
+  <li class=" " data-id="chem/Chem/Maestro" data-name="chem::maestro">
+      <a href="../Chem/Maestro.html">Maestro</a>
       
     </li>
   
@@ -737,7 +722,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/chain_view.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/chain_view.cr#L2" target="_blank">
         chem/core/chain_view.cr
       </a>
     
@@ -772,6 +757,20 @@
     
       <li class="entry-summary">
         <a href="#residues%3AResidueView-instance-method" class="signature"><strong>#residues</strong> : ResidueView</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_a%3AArray%28Chain%29-instance-method" class="signature"><strong>#to_a</strong> : Array(Chain)</a>
+        
+          <div class="summary"><p>Returns a mutable copy of the enclosed chains.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_unsafe%3AArray%28Chain%29-instance-method" class="signature"><strong>#to_unsafe</strong> : Array(Chain)</a>
+        
+          <div class="summary"><p>Returns the enclosed array.</p></div>
         
       </li>
     
@@ -872,6 +871,11 @@
     <a href="../Enumerable.html#to_dcd%28io%3AIO%2Ctitle%3AString%7CNil%3Dnil%29%3ANil-instance-method" class="tooltip">
       <span>to_dcd(io : IO, title : String | Nil = <span class="n">nil</span>) : Nil<br/>to_dcd(title : String | Nil = <span class="n">nil</span>) : String<br/>to_dcd(path : Path | String, title : String | Nil = <span class="n">nil</span>) : Nil</span>
     to_dcd</a>, 
+    
+  
+    <a href="../Enumerable.html#to_maestro%28io%3AIO%29%3ANil-instance-method" class="tooltip">
+      <span>to_maestro(io : IO) : Nil<br/>to_maestro(path : Path | String) : Nil<br/>to_maestro : String</span>
+    to_maestro</a>, 
     
   
     <a href="../Enumerable.html#to_mol2%28io%3AIO%29%3ANil-instance-method" class="tooltip">
@@ -1000,7 +1004,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/chain_view.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/chain_view.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1016,7 +1020,49 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/chain_view.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/chain_view.cr#L16" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_a:Array(Chain)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_a</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/Chain.html">Chain</a>)
+
+        <a class="method-permalink" href="#to_a%3AArray%28Chain%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a mutable copy of the enclosed chains.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/chain_view.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_unsafe:Array(Chain)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_unsafe</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/Chain.html">Chain</a>)
+
+        <a class="method-permalink" href="#to_unsafe%3AArray%28Chain%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the enclosed array. Mutating it changes the view's source.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/chain_view.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>

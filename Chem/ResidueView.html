@@ -77,11 +77,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem/Chem/Angle" data-name="chem::angle">
-      <a href="../Chem/Angle.html">Angle</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Atom" data-name="chem::atom">
       <a href="../Chem/Atom.html">Atom</a>
       
@@ -127,11 +122,6 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/Connectivity" data-name="chem::connectivity(t)">
-      <a href="../Chem/Connectivity.html">Connectivity</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Cube" data-name="chem::cube">
       <a href="../Chem/Cube.html">Cube</a>
       
@@ -154,11 +144,6 @@
   
 </ul>
 
-      
-    </li>
-  
-  <li class=" " data-id="chem/Chem/Dihedral" data-name="chem::dihedral">
-      <a href="../Chem/Dihedral.html">Dihedral</a>
       
     </li>
   
@@ -187,13 +172,13 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/Improper" data-name="chem::improper">
-      <a href="../Chem/Improper.html">Improper</a>
+  <li class=" " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
+      <a href="../Chem/JDFTx.html">JDFTx</a>
       
     </li>
   
-  <li class=" " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
-      <a href="../Chem/JDFTx.html">JDFTx</a>
+  <li class=" " data-id="chem/Chem/Maestro" data-name="chem::maestro">
+      <a href="../Chem/Maestro.html">Maestro</a>
       
     </li>
   
@@ -737,7 +722,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/residue_view.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L2" target="_blank">
         chem/core/residue_view.cr
       </a>
     
@@ -829,6 +814,20 @@
         <a href="#secondary_structures%28strict%3ABool%3Dtrue%2Chandedness%3ABool%3Dtrue%29%3AArray%28ResidueView%29-instance-method" class="signature"><strong>#secondary_structures</strong>(strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>) : Array(ResidueView)</a>
         
           <div class="summary"><p><span class="flag orange">TODO</span>  rename to <code>#chunks_by_sec</code> or <code>#sec_chunks</code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_a%3AArray%28Residue%29-instance-method" class="signature"><strong>#to_a</strong> : Array(Residue)</a>
+        
+          <div class="summary"><p>Returns a mutable copy of the enclosed residues.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_unsafe%3AArray%28Residue%29-instance-method" class="signature"><strong>#to_unsafe</strong> : Array(Residue)</a>
+        
+          <div class="summary"><p>Returns the enclosed array.</p></div>
         
       </li>
     
@@ -929,6 +928,11 @@
     <a href="../Enumerable.html#to_dcd%28io%3AIO%2Ctitle%3AString%7CNil%3Dnil%29%3ANil-instance-method" class="tooltip">
       <span>to_dcd(io : IO, title : String | Nil = <span class="n">nil</span>) : Nil<br/>to_dcd(title : String | Nil = <span class="n">nil</span>) : String<br/>to_dcd(path : Path | String, title : String | Nil = <span class="n">nil</span>) : Nil</span>
     to_dcd</a>, 
+    
+  
+    <a href="../Enumerable.html#to_maestro%28io%3AIO%29%3ANil-instance-method" class="tooltip">
+      <span>to_maestro(io : IO) : Nil<br/>to_maestro(path : Path | String) : Nil<br/>to_maestro : String</span>
+    to_maestro</a>, 
     
   
     <a href="../Enumerable.html#to_mol2%28io%3AIO%29%3ANil-instance-method" class="tooltip">
@@ -1057,7 +1061,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/residue_view.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1073,7 +1077,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/residue_view.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1103,7 +1107,7 @@ sequence 1-2-3-4-5-6 7-8-9, this method will return [[1, 2, 3, 4],
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/residue_view.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1149,7 +1153,7 @@ each slice of interest is to be used in a read-only fashion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/residue_view.cr#L83" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L83" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1199,7 +1203,7 @@ each slice of interest is to be used in a read-only fashion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/residue_view.cr#L137" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L137" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1215,7 +1219,7 @@ each slice of interest is to be used in a read-only fashion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/residue_view.cr#L156" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L156" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1237,7 +1241,7 @@ each slice of interest is to be used in a read-only fashion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/residue_view.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1259,7 +1263,7 @@ each slice of interest is to be used in a read-only fashion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/residue_view.cr#L169" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L169" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1275,7 +1279,7 @@ each slice of interest is to be used in a read-only fashion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/residue_view.cr#L180" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L180" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1291,7 +1295,7 @@ each slice of interest is to be used in a read-only fashion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/residue_view.cr#L175" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L175" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1312,7 +1316,49 @@ each slice of interest is to be used in a read-only fashion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/core/residue_view.cr#L187" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L187" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_a:Array(Residue)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_a</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/Residue.html">Residue</a>)
+
+        <a class="method-permalink" href="#to_a%3AArray%28Residue%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a mutable copy of the enclosed residues.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L196" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_unsafe:Array(Residue)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_unsafe</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/Residue.html">Residue</a>)
+
+        <a class="method-permalink" href="#to_unsafe%3AArray%28Residue%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the enclosed array. Mutating it changes the view's source.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/residue_view.cr#L201" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="chem">
-  <title>Chem::Improper - chem master</title>
+  <title>Chem::Maestro - chem master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -77,11 +77,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem/Chem/Angle" data-name="chem::angle">
-      <a href="../Chem/Angle.html">Angle</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Atom" data-name="chem::atom">
       <a href="../Chem/Atom.html">Atom</a>
       
@@ -127,11 +122,6 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/Connectivity" data-name="chem::connectivity(t)">
-      <a href="../Chem/Connectivity.html">Connectivity</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Cube" data-name="chem::cube">
       <a href="../Chem/Cube.html">Cube</a>
       
@@ -154,11 +144,6 @@
   
 </ul>
 
-      
-    </li>
-  
-  <li class=" " data-id="chem/Chem/Dihedral" data-name="chem::dihedral">
-      <a href="../Chem/Dihedral.html">Dihedral</a>
       
     </li>
   
@@ -187,13 +172,13 @@
       
     </li>
   
-  <li class=" current" data-id="chem/Chem/Improper" data-name="chem::improper">
-      <a href="../Chem/Improper.html">Improper</a>
+  <li class=" " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
+      <a href="../Chem/JDFTx.html">JDFTx</a>
       
     </li>
   
-  <li class=" " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
-      <a href="../Chem/JDFTx.html">JDFTx</a>
+  <li class=" current" data-id="chem/Chem/Maestro" data-name="chem::maestro">
+      <a href="../Chem/Maestro.html">Maestro</a>
       
     </li>
   
@@ -687,13 +672,11 @@
 <h1 class="type-name">
 
   <span class="kind">
-    struct
-  </span> Chem::<wbr>Improper
+    module
+  </span> Chem::<wbr>Maestro
 
 </h1>
 
-
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Chem/Improper.html">Chem::Improper</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
@@ -707,37 +690,33 @@
     Overview
   </h2>
 
-  <p>An <code><a href="../Chem/Improper.html">Improper</a></code> provides a canonical representation of an improper
-dihedral angle between four bonded atoms.</p>
-<p>An improper dihedral angle is defined by three bonds around a
-central atom:</p>
-<pre><code class="language-crystal">A       C
-  \   /
-    B
-    |
-    D</code></pre>
-<p>It measures the angle between the two planes defined by the atoms
-(A,B,C) and (C,B,D).</p>
+  <p>This module provides support for reading and writing Schrödinger
+Maestro files (<code>.mae</code>, <code>.maegz</code>, <code>.mae.gz</code>).</p>
+<p>The layout follows <a href="https://github.com/schrodinger/maeparser">maeparser</a>: a file is a token stream of
+nested blocks, and each structure is an <code>f_m_ct</code> block. Atoms and
+bonds live in indexed <code>m_atom[N]</code> / <code>m_bond[N]</code> blocks with 1-based
+indexes. Bond rows are stored in one direction; files that list both
+directions are accepted and de-duplicated.</p>
+<p>Multi-entry files are read with <code><a href="../Chem/Maestro.html#each%28io%3AIO%2Csource_file%3APath%7CString%7CNil%3Dnil%2C%26%3AStructure-%3E%29%3ANil-class-method">.each</a></code> / <code><a href="../Chem/Maestro.html#read_all%28io%3AIO%2Csource_file%3APath%7CString%7CNil%3Dnil%29%3AArray%28Structure%29-class-method">.read_all</a></code> and written as
+successive <code>f_m_ct</code> blocks. Path overloads decompress or compress
+<code>.maegz</code> and <code>.mae.gz</code>. <code>Chem.read(&quot;file.mae.gz&quot;)</code> selects this format
+because extensions are matched as a filename suffix.</p>
+<p><code>&lt;&gt;</code> is undefined: it is omitted from metadata and does not overwrite
+typed field defaults. Title and CRYST1 stay on <code><a href="../Chem/Structure.html#title%3AString-instance-method">Structure#title</a></code> and
+<code>#cell</code>, not metadata. Extra columns are stored as metadata; on write,
+keys that are not already Maestro property names are emitted as
+<code>{b|i|r|s}_user_&lt;name&gt;</code>.</p>
+<p>Atom names prefer <code>s_m_pdb_atom_name</code>, then <code>s_m_atom_name</code>. Residue
+atoms without a name use <code>{element}{index}</code>. Bonds of order 4 are
+Kekulized on read. Formal charges and bonds come from the file.</p>
+<p><span class="flag yellow">WARNING</span>  Basic support only. Stereo, display, and other advanced
+blocks are stored as metadata or skipped.</p>
 
 
 
 
 
 
-
-  <h2>
-    <a id="included-modules" class="anchor" href="#included-modules">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Included Modules
-  </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="../Chem/Connectivity.html">Chem::Connectivity</a>({<a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>})</li>
-    
-  </ul>
 
 
 
@@ -758,8 +737,8 @@ central atom:</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L250" target="_blank">
-        chem/connectivity.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/formats/maestro.cr#L32" target="_blank">
+        chem/formats/maestro.cr
       </a>
     
     <br/>
@@ -767,23 +746,127 @@ central atom:</p>
 
 
 
-
-
   
-  <h2>
-    <a id="constructors" class="anchor" href="#constructors">
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Constructors
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="BLOCK_BEGINNING">
+        <strong>BLOCK_BEGINNING</strong> = <code><span class="s">&#39;{&#39;</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="BLOCK_END">
+        <strong>BLOCK_END</strong> = <code><span class="s">&#39;}&#39;</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="DELIMITER">
+        <strong>DELIMITER</strong> = <code><span class="s">&quot;:::&quot;</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="EMPTY_FIELD">
+        <strong>EMPTY_FIELD</strong> = <code><span class="s">&quot;&lt;&gt;&quot;</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="PROPERTY_NAME_REGEX">
+        <strong>PROPERTY_NAME_REGEX</strong> = <code><span class="s">/^[birs]_[a-zA-Z0-9]+_.+$/</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+  
+
+  
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
   </h2>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28a1%3AAtom%2Ca2%3AAtom%2Ca3%3AAtom%2Ca4%3AAtom%29-class-method" class="signature"><strong>.new</strong>(a1 : Atom, a2 : Atom, a3 : Atom, a4 : Atom)</a>
+        <a href="#each%28io%3AIO%2Csource_file%3APath%7CString%7CNil%3Dnil%2C%26%3AStructure-%3E%29%3ANil-class-method" class="signature"><strong>.each</strong>(io : IO, source_file : Path | String | Nil = <span class="n">nil</span>, & : Structure -> ) : Nil</a>
         
-          <div class="summary"><p>Creates a new <em>Improper</em> with the given atoms.</p></div>
+          <div class="summary"><p>Yields each structure in <em>io</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each%28path%3APath%7CString%2C%26%3AStructure-%3E%29%3ANil-class-method" class="signature"><strong>.each</strong>(path : Path | String, & : Structure -> ) : Nil</a>
+        
+          <div class="summary"><p>Yields each structure in <em>path</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read%28io%3AIO%2Csource_file%3APath%7CString%7CNil%3Dnil%29%3AStructure-class-method" class="signature"><strong>.read</strong>(io : IO, source_file : Path | String | Nil = <span class="n">nil</span>) : Structure</a>
+        
+          <div class="summary"><p>Returns the next structure from <em>io</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read%28path%3APath%7CString%29%3AStructure-class-method" class="signature"><strong>.read</strong>(path : Path | String) : Structure</a>
+        
+          <div class="summary"><p>Returns the first structure in <em>path</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_all%28io%3AIO%2Csource_file%3APath%7CString%7CNil%3Dnil%29%3AArray%28Structure%29-class-method" class="signature"><strong>.read_all</strong>(io : IO, source_file : Path | String | Nil = <span class="n">nil</span>) : Array(Structure)</a>
+        
+          <div class="summary"><p>Returns all structures in <em>io</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_all%28path%3APath%7CString%29%3AArray%28Structure%29-class-method" class="signature"><strong>.read_all</strong>(path : Path | String) : Array(Structure)</a>
+        
+          <div class="summary"><p>Returns all structures in <em>path</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#write%28io%3AIO%2Cstruc%3AStructure%29%3ANil-class-method" class="signature"><strong>.write</strong>(io : IO, struc : Structure) : Nil</a>
+        
+          <div class="summary"><p>Writes <em>struc</em> to <em>io</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#write%28io%3AIO%2Centries%3AEnumerable%28Structure%29%29%3ANil-class-method" class="signature"><strong>.write</strong>(io : IO, entries : Enumerable(Structure)) : Nil</a>
+        
+          <div class="summary"><p>Writes each structure in <em>entries</em> to <em>io</em> as successive <code>f_m_ct</code> blocks.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#write%28path%3APath%7CString%2Cstruc%3AStructure%29%3ANil-class-method" class="signature"><strong>.write</strong>(path : Path | String, struc : Structure) : Nil</a>
+        
+          <div class="summary"><p>Writes <em>struc</em> to <em>path</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#write%28path%3APath%7CString%2Centries%3AEnumerable%28Structure%29%29%3ANil-class-method" class="signature"><strong>.write</strong>(path : Path | String, entries : Enumerable(Structure)) : Nil</a>
+        
+          <div class="summary"><p>Writes each structure in <em>entries</em> to <em>path</em>.</p></div>
         
       </li>
     
@@ -793,159 +876,236 @@ central atom:</p>
   
 
   
-
-  
-  <h2>
-    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#measure%3AFloat64-instance-method" class="signature"><strong>#measure</strong> : Float64</a>
-        
-          <div class="summary"><p>Returns the current value of the improper dihedral angle in radians.</p></div>
-        
-      </li>
-    
-  </ul>
-
 
 
   <div class="methods-inherited">
     
-      
-
-  <h3>Instance methods inherited from module <code><a href="../Chem/Connectivity.html">Chem::Connectivity</a>({<a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>})</code></h3>
-  
-  
-    <a href="../Chem/Connectivity.html#%3C%3D%3E%28rhs%3Aself%29%3AInt32-instance-method" class="tooltip">
-      <span><=>(rhs : <span class="k">self</span>) : Int32</span>
-    <=></a>, 
-    
-  
-    <a href="../Chem/Connectivity.html#atoms%3A%7BChem%3A%3AAtom%2CChem%3A%3AAtom%2CChem%3A%3AAtom%2CChem%3A%3AAtom%7D-instance-method" class="tooltip">
-      <span>atoms : {Chem::Atom, Chem::Atom, Chem::Atom, Chem::Atom}</span>
-    atoms</a>, 
-    
-  
-    <a href="../Chem/Connectivity.html#includes%3F%28atom%3AAtom%29%3ABool-instance-method" class="tooltip">
-      <span>includes?(atom : Atom) : Bool</span>
-    includes?</a>, 
-    
-  
-    <a href="../Chem/Connectivity.html#inspect%28io%3AIO%29%3ANil-instance-method" class="tooltip">
-      <span>inspect(io : IO) : Nil</span>
-    inspect</a>, 
-    
-  
-    <a href="../Chem/Connectivity.html#measure%3AFloat64-instance-method" class="tooltip">
-      <span>measure : Float64</span>
-    measure</a>, 
-    
-  
-    <a href="../Chem/Connectivity.html#to_s%28io%3AIO%29%3ANil-instance-method" class="tooltip">
-      <span>to_s(io : IO) : Nil</span>
-    to_s</a>
-    
-  
-
-
-      
-
-
-      
-
-
-      
-
-
-    
-      
-
-
-      
-
-
-      
-
-
-      
-
-
-    
-      
-
-
-      
-
-
-      
-
-
-      
-
-
-    
-      
-
-
-      
-
-
-      
-
-
-      
-
-
-    
-      
-
-
-      
-
-
-      
-
-
-      
-
-
-    
   </div>
 
   
+
+  
   <h2>
-    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Constructor Detail
+    Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="new(a1:Atom,a2:Atom,a3:Atom,a4:Atom)-class-method">
+    <div class="entry-detail" id="each(io:IO,source_file:Path|String|Nil=nil,&amp;:Structure-&gt;):Nil-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(a1 : <a href="../Chem/Atom.html">Atom</a>, a2 : <a href="../Chem/Atom.html">Atom</a>, a3 : <a href="../Chem/Atom.html">Atom</a>, a4 : <a href="../Chem/Atom.html">Atom</a>)
+        def self.<strong>each</strong>(io : IO, source_file : <a href="../Path.html">Path</a> | <a href="../String.html">String</a> | Nil = <span class="n">nil</span>, & : <a href="../Chem/Structure.html">Structure</a> -> ) : Nil
 
-        <a class="method-permalink" href="#new%28a1%3AAtom%2Ca2%3AAtom%2Ca3%3AAtom%2Ca4%3AAtom%29-class-method">#</a>
+        <a class="method-permalink" href="#each%28io%3AIO%2Csource_file%3APath%7CString%7CNil%3Dnil%2C%26%3AStructure-%3E%29%3ANil-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Creates a new <em>Improper</em> with the given atoms.</p>
+          <p>Yields each structure in <em>io</em>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L254" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/formats/maestro.cr#L40" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each(path:Path|String,&amp;:Structure-&gt;):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>each</strong>(path : <a href="../Path.html">Path</a> | <a href="../String.html">String</a>, & : <a href="../Chem/Structure.html">Structure</a> -> ) : Nil
+
+        <a class="method-permalink" href="#each%28path%3APath%7CString%2C%26%3AStructure-%3E%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Yields each structure in <em>path</em>.
+Compressed <code>.maegz</code> and <code>.mae.gz</code> files are decompressed.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/formats/maestro.cr#L54" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read(io:IO,source_file:Path|String|Nil=nil):Structure-class-method">
+      <div class="signature">
+        
+        def self.<strong>read</strong>(io : IO, source_file : <a href="../Path.html">Path</a> | <a href="../String.html">String</a> | Nil = <span class="n">nil</span>) : <a href="../Chem/Structure.html">Structure</a>
+
+        <a class="method-permalink" href="#read%28io%3AIO%2Csource_file%3APath%7CString%7CNil%3Dnil%29%3AStructure-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the next structure from <em>io</em>.
+Use <code><a href="../Chem/Maestro.html#read_all%28io%3AIO%2Csource_file%3APath%7CString%7CNil%3Dnil%29%3AArray%28Structure%29-class-method">.read_all</a></code> or <code><a href="../Chem/Maestro.html#each%28io%3AIO%2Csource_file%3APath%7CString%7CNil%3Dnil%2C%26%3AStructure-%3E%29%3ANil-class-method">.each</a></code> for multiple.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/formats/maestro.cr#L64" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read(path:Path|String):Structure-class-method">
+      <div class="signature">
+        
+        def self.<strong>read</strong>(path : <a href="../Path.html">Path</a> | <a href="../String.html">String</a>) : <a href="../Chem/Structure.html">Structure</a>
+
+        <a class="method-permalink" href="#read%28path%3APath%7CString%29%3AStructure-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the first structure in <em>path</em>.
+Compressed <code>.maegz</code> and <code>.mae.gz</code> files are decompressed.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/formats/maestro.cr#L71" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_all(io:IO,source_file:Path|String|Nil=nil):Array(Structure)-class-method">
+      <div class="signature">
+        
+        def self.<strong>read_all</strong>(io : IO, source_file : <a href="../Path.html">Path</a> | <a href="../String.html">String</a> | Nil = <span class="n">nil</span>) : <a href="../Array.html">Array</a>(<a href="../Chem/Structure.html">Structure</a>)
+
+        <a class="method-permalink" href="#read_all%28io%3AIO%2Csource_file%3APath%7CString%7CNil%3Dnil%29%3AArray%28Structure%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns all structures in <em>io</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/formats/maestro.cr#L78" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_all(path:Path|String):Array(Structure)-class-method">
+      <div class="signature">
+        
+        def self.<strong>read_all</strong>(path : <a href="../Path.html">Path</a> | <a href="../String.html">String</a>) : <a href="../Array.html">Array</a>(<a href="../Chem/Structure.html">Structure</a>)
+
+        <a class="method-permalink" href="#read_all%28path%3APath%7CString%29%3AArray%28Structure%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns all structures in <em>path</em>.
+Compressed <code>.maegz</code> and <code>.mae.gz</code> files are decompressed.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/formats/maestro.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="write(io:IO,struc:Structure):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>write</strong>(io : IO, struc : <a href="../Chem/Structure.html">Structure</a>) : Nil
+
+        <a class="method-permalink" href="#write%28io%3AIO%2Cstruc%3AStructure%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Writes <em>struc</em> to <em>io</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/formats/maestro.cr#L91" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="write(io:IO,entries:Enumerable(Structure)):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>write</strong>(io : IO, entries : <a href="../Enumerable.html">Enumerable</a>(<a href="../Chem/Structure.html">Structure</a>)) : Nil
+
+        <a class="method-permalink" href="#write%28io%3AIO%2Centries%3AEnumerable%28Structure%29%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Writes each structure in <em>entries</em> to <em>io</em> as successive <code>f_m_ct</code> blocks.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/formats/maestro.cr#L97" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="write(path:Path|String,struc:Structure):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>write</strong>(path : <a href="../Path.html">Path</a> | <a href="../String.html">String</a>, struc : <a href="../Chem/Structure.html">Structure</a>) : Nil
+
+        <a class="method-permalink" href="#write%28path%3APath%7CString%2Cstruc%3AStructure%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Writes <em>struc</em> to <em>path</em>.
+Compressed <code>.maegz</code> and <code>.mae.gz</code> files are gzip-compressed.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/formats/maestro.cr#L107" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="write(path:Path|String,entries:Enumerable(Structure)):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>write</strong>(path : <a href="../Path.html">Path</a> | <a href="../String.html">String</a>, entries : <a href="../Enumerable.html">Enumerable</a>(<a href="../Chem/Structure.html">Structure</a>)) : Nil
+
+        <a class="method-permalink" href="#write%28path%3APath%7CString%2Centries%3AEnumerable%28Structure%29%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Writes each structure in <em>entries</em> to <em>path</em>.
+Compressed <code>.maegz</code> and <code>.mae.gz</code> files are gzip-compressed.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/formats/maestro.cr#L113" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -955,40 +1115,6 @@ central atom:</p>
   
 
   
-
-  
-  <h2>
-    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="measure:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>measure</strong> : Float64
-
-        <a class="method-permalink" href="#measure%3AFloat64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the current value of the improper dihedral angle in
-radians.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/connectivity.cr#L262" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-
 
 
 </div>
