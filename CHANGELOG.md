@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Added
+
+#### Input/output
+
+- Read and write Schrödinger Maestro files (`.mae`, `.maegz`, `.mae.gz`), following [maeparser](https://github.com/schrodinger/maeparser).
+
 ### Changed
 
 #### Core
@@ -23,6 +29,7 @@
 
 #### Input/output
 
+- `Chem.guess_format` matches registered extensions as a case-insensitive suffix of the basename, so multi-part extensions such as `.mae.gz` work. Longer suffixes take precedence.
 - **Breaking:** `PSF.read` reads atoms and bonds only. Angle, dihedral, and improper sections are ignored.
 - PSF reader constructs topology objects directly instead of using `Structure::Builder`.
 - **Breaking:** XYZ, POSCAR, Cube, Gen, and JDFTx readers construct `Structure` and `Atom` directly. They no longer invent atom names via `Structure::Builder`; names come from `guess_names` or explicit fields (extended XYZ).

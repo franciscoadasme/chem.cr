@@ -51,9 +51,6 @@ class Chem::Metadata
   # Union of possible metadata value types.
   alias ValueType = Bool | Int32 | Float64 | String
 
-  include Enumerable({String, ValueType})
-  include Iterable({String, ValueType})
-
   # `Any` wraps a value that can be any of the possible metadata
   # types (`ValueType`). It provides convenient `#as_*` cast methods.
   struct Any
@@ -205,10 +202,17 @@ class Chem::Metadata
       io << ')'
     end
 
+    def pretty_print(pp : PrettyPrint) : Nil
+      pp.text @raw.inspect
+    end
+
     def to_s(io : IO) : Nil
       @raw.to_s io
     end
   end
+
+  include Enumerable({String, Any})
+  include Iterable({String, Any})
 
   @data = Hash(String, Any).new
 
@@ -296,6 +300,26 @@ class Chem::Metadata
     @data.empty?
   end
 
+  def extract(*keys : String) : Hash(String, Any)
+    extract keys
+  end
+
+  def extract(keys : Enumerable(String)) : Hash(String, Any)
+    Hash(String, Any).new.tap do |hash|
+      keys.each do |key|
+        delete(key).try { |value| hash[key] = value }
+      end
+    end
+  end
+
+  def extract(pattern : Regex) : Hash(String, Any)
+    Hash(String, Any).new.tap do |hash|
+      reject! do |key, value|
+        (key =~ pattern).tap { |rejected| hash[key] = value if rejected }
+      end
+    end
+  end
+
   # Returns the value if the given key exists, else *default*.
   def fetch(key : String, default : T) : Any | T forall T
     @data.fetch(key, default)
@@ -370,6 +394,11 @@ class Chem::Metadata
       end
     end
     self
+  end
+
+  def pretty_print(pp : PrettyPrint) : Nil
+    pp.text self.class.name
+    @data.pretty_print pp
   end
 
   # Deletes the entries for which the given block is truthy.

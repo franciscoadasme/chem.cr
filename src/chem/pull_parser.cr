@@ -72,7 +72,7 @@ module Chem
   class PullParser
     @buffer : Bytes = Bytes.empty
     @line : String?
-    @line_number = 0
+    getter line_number = 0
     @token_size = 0
 
     # Returns the enclosed IO.

@@ -7,7 +7,9 @@ module Chem
   #
   # The annotation accepts the following named arguments:
   #
-  # - **ext**: an array of extensions (including leading dot).
+  # - **ext**: an array of extensions (including leading dot). Multi-part
+  #   extensions such as `.mae.gz` are allowed. Matching is a
+  #   case-insensitive suffix of the filename; longer extensions win.
   # - **names**: an array of file patterns.
   #   The pattern syntax is similar to shell filename globbing and it is evaluated via `File.match?` to match against a filepath.
   #
@@ -480,26 +482,28 @@ macro finished
   # TODO: Improve docs.
 
   # Returns the format module for *path* based on its filename, or `nil`
-  # if unknown. File stem matching via `File.match?` is case-sensitive
-  # but extension matching is not.
+  # if unknown. Extensions are matched as a case-insensitive suffix of
+  # the basename, so multi-part extensions such as `.mae.gz` work.
+  # Longer extensions take precedence over shorter ones. File stem
+  # matching via `File.match?` is case-sensitive and is used only if no
+  # extension matches.
   def Chem.guess_format?(path : Path | String)
     path = Path[path]
     stem = path.stem
-    ext = path.extension.downcase
+    basename = path.basename.downcase
+    {% for ext in ext_table.keys.sort_by { |ext| -ext.size } %}
+      return {{ext_table[ext]}} if basename.ends_with?({{ext.downcase}})
+    {% end %}
     {% for ftype in formats %}
-      {% if exts = ftype.annotation(Chem::RegisterFormat)[:ext] %}
-        return {{ftype}} if {{{exts.splat}}}.includes?(ext)
-      {% end %}
       {% if names = ftype.annotation(Chem::RegisterFormat)[:names] %}
         return {{ftype}} if {{{names.splat}}}.any? { |pattern| File.match?(pattern, stem) }
       {% end %}
     {% end %}
   end
 
-  # Returns the format module for *path* based on its filename. File
-  # stem matching via `File.match?` is case-sensitive but extension
-  # matching is not. Raises ArgumentError if the format cannot be
-  # determined.
+  # Returns the format module for *path* based on its filename.
+  # See `.guess_format?` for matching rules. Raises ArgumentError if the
+  # format cannot be determined.
   def Chem.guess_format(path : Path | String)
     guess_format?(path) || raise ArgumentError.new("File format not found for #{path}")
   end

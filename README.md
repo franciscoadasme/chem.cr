@@ -306,7 +306,7 @@ Please refer to the table at the [benchmark results](https://github.com/francisc
 - [x] Mol/SDF (.mol, .sdf).
 - [x] Tripos Mol2 (.mol2).
 - [x] PSF (.psf).
-- [ ] Maestro (.mae).
+- [x] Maestro (.mae, .maegz, .mae.gz).
 - [x] DCD trajectory format (.dcd).
 - [x] JDFTx (.ionpos and .lattice).
 - [x] VASP's Poscar (POSCAR, CONTCAR).

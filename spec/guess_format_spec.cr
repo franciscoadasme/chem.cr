@@ -17,8 +17,13 @@ module License
   def self.write(io : IO, obj : String) : Nil; end
 end
 
-@[Chem::RegisterFormat]
-module MultiString
+@[Chem::RegisterFormat(ext: %w(.bar))]
+module BarFmt
+  def self.write(io : IO, obj : String) : Nil; end
+end
+
+@[Chem::RegisterFormat(ext: %w(.foo.bar))]
+module FooBarFmt
   def self.write(io : IO, obj : String) : Nil; end
 end
 
@@ -33,6 +38,13 @@ describe Chem do
       Chem.guess_format?("file.cad").should eq CAD
       Chem.guess_format?("file.CAD").should eq CAD
       Chem.guess_format?("file.lic").should eq License
+      Chem.guess_format?("file.bar").should eq BarFmt
+      Chem.guess_format?("file.foo.bar").should eq FooBarFmt
+      Chem.guess_format?("FILE.FOO.BAR").should eq FooBarFmt
+      Chem.guess_format?("file.mae").should eq Chem::Maestro
+      Chem.guess_format?("file.maegz").should eq Chem::Maestro
+      Chem.guess_format?("file.mae.gz").should eq Chem::Maestro
+      Chem.guess_format?("FILE.MAE.GZ").should eq Chem::Maestro
 
       Chem.guess_format?("img.tiff").should eq Image
       Chem.guess_format?("spec.cad").should eq CAD
@@ -46,8 +58,8 @@ describe Chem do
     end
 
     it "returns nil for unknown file" do
-      Chem.guess_format?("file.dfgkjh").should be_nil
-      Chem.guess_format?("foo.bar").should be_nil
+      Chem.guess_format?("file.foo.bar.bak").should be_nil
+      Chem.guess_format?("foo.baz").should be_nil
       Chem.guess_format?("baz").should be_nil
       Chem.guess_format?("UNKNOWN").should be_nil
       %w(Spec spec Specs LIKENSE NOTLIC KENOT KE_NOT UNKNOWN).each do |stem|
@@ -61,8 +73,8 @@ describe Chem do
       expect_raises ArgumentError, "File format not found for file.hei" do
         Chem.guess_format "file.hei"
       end
-      expect_raises ArgumentError, "File format not found for foo.bar" do
-        Chem.guess_format "foo.bar"
+      expect_raises ArgumentError, "File format not found for foo.baz" do
+        Chem.guess_format "foo.baz"
       end
       expect_raises ArgumentError, "File format not found for UNKNOWN" do
         Chem.guess_format "UNKNOWN"
