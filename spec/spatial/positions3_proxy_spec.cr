@@ -211,10 +211,10 @@ describe Chem::Spatial::Positions3Proxy do
     it "computes the rmsd in-place with weights" do
       s = Array(Chem::Structure).read spec_file("E20_conformers.mol2")
       weights = s[0].atoms.map &.mass
-      s[1].pos.rmsd(s[0].pos, weights).should be_close 8.187659, 1e-6
-      s[2].pos.rmsd(s[0].pos, weights).should be_close 2.265467, 1e-6
-      s[3].pos.rmsd(s[0].pos, weights).should be_close 7.955341, 1e-6
-      s[4].pos.rmsd(s[0].pos, weights).should be_close 1.510461, 1e-6
+      s[1].pos.rmsd(s[0].pos, weights: weights).should be_close 8.187659, 1e-6
+      s[2].pos.rmsd(s[0].pos, weights: weights).should be_close 2.265467, 1e-6
+      s[3].pos.rmsd(s[0].pos, weights: weights).should be_close 7.955341, 1e-6
+      s[4].pos.rmsd(s[0].pos, weights: weights).should be_close 1.510461, 1e-6
     end
 
     it "computes the minimum rmsd" do
@@ -228,10 +228,37 @@ describe Chem::Spatial::Positions3Proxy do
     it "computes the minimum rmsd with weights" do
       s = Array(Chem::Structure).read spec_file("E20_conformers.mol2")
       weights = s[0].atoms.map &.mass
-      s[1].pos.rmsd(s[0].pos, weights, minimize: true).should be_close 2.811033, 1e-6
-      s[2].pos.rmsd(s[0].pos, weights, minimize: true).should be_close 1.358219, 1e-6
-      s[3].pos.rmsd(s[0].pos, weights, minimize: true).should be_close 3.067433, 1e-6
-      s[4].pos.rmsd(s[0].pos, weights, minimize: true).should be_close 1.084173, 1e-6
+      s[1].pos.rmsd(s[0].pos, weights: weights, minimize: true).should be_close 2.811033, 1e-6
+      s[2].pos.rmsd(s[0].pos, weights: weights, minimize: true).should be_close 1.358219, 1e-6
+      s[3].pos.rmsd(s[0].pos, weights: weights, minimize: true).should be_close 3.067433, 1e-6
+      s[4].pos.rmsd(s[0].pos, weights: weights, minimize: true).should be_close 1.084173, 1e-6
+    end
+
+    it "does not mutate the weights array" do
+      s = Array(Chem::Structure).read spec_file("E20_conformers.mol2")
+      weights = s[0].atoms.map &.mass
+      original = weights.dup
+      s[1].pos.rmsd(s[0].pos, weights: weights, minimize: true)
+      weights.should eq original
+    end
+
+    it "raises if coordinate sets have different sizes" do
+      s = fake_structure
+      expect_raises(ArgumentError, "Incompatible coordinates") do
+        s.atoms[0..2].pos.rmsd s.atoms[0..4].pos
+      end
+    end
+
+    it "accepts mixed atom and coordinate types" do
+      s = Array(Chem::Structure).read spec_file("E20_conformers.mol2")
+      expected = s[1].pos.rmsd(s[0].pos)
+      s[1].atoms.rmsd(s[0].pos).should be_close expected, 1e-6
+      s[1].atoms.rmsd(s[0].pos.to_a).should be_close expected, 1e-6
+      s[1].atoms.rmsd(s[0]).should be_close expected, 1e-6
+      s[1].pos.rmsd(s[0].pos.to_a).should be_close expected, 1e-6
+      s[1].pos.rmsd(s[0]).should be_close expected, 1e-6
+      Chem::Spatial.rmsd(s[1].pos, s[0].pos.to_a).should be_close expected, 1e-6
+    end
     end
   end
 

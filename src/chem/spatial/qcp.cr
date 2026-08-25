@@ -27,9 +27,9 @@ module Chem::Spatial
   #
   # WARNING: Coordinate sets must be centered at the origin.
   #
-  # NOTE: Prefer using the `Spatial.rmsd` methods, which takes care of
-  # centering the coordinates and whether or not the coordinate sets
-  # should be superimposed first.
+  # NOTE: Prefer using `Spatial.rmsd`, `AtomView#rmsd`, or
+  # `Positions3Proxy#rmsd`, which take care of centering the coordinates
+  # and whether or not the coordinate sets should be superimposed first.
   #
   # ### References
   #

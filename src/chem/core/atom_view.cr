@@ -95,23 +95,14 @@ module Chem
     end
 
     # Returns the RMSD in Å between the enclosed atoms and *other*.
-    # Delegates to `Positions3Proxy#rmsd`.
+    # Delegates to `Spatial.rmsd`.
     def rmsd(
-      other : self,
+      other,
+      *,
+      weights : Indexable(Float64)? = nil,
       minimize : Bool = false,
-      use_symmetry : Bool = false,
     ) : Float64
-      pos.rmsd(other.pos, minimize: minimize, use_symmetry: use_symmetry)
-    end
-
-    # :ditto:
-    def rmsd(
-      other : self,
-      weights : Indexable(Float64),
-      minimize : Bool = false,
-      use_symmetry : Bool = false,
-    ) : Float64
-      pos.rmsd(other.pos, weights, minimize: minimize, use_symmetry: use_symmetry)
+      Spatial.rmsd pos, other, weights: weights, minimize: minimize
     end
 
     # Applies the 2-fold swaps selected by *mask*. Each bit of *mask*

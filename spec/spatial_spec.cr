@@ -134,4 +134,21 @@ describe Chem::Spatial do
       end
     end
   end
+
+  describe ".coords" do
+    it "returns coordinates for atoms, proxies, and structures" do
+      s = fake_structure
+      Chem::Spatial.coords(s.pos).should eq s.pos
+      Chem::Spatial.coords(s.atoms).should eq s.pos
+      Chem::Spatial.coords(s).should eq s.pos
+    end
+  end
+
+  describe ".rmsd" do
+    it "computes the rmsd between two coordinate sets" do
+      s = Array(Chem::Structure).read spec_file("E20_conformers.mol2")
+      Chem::Spatial.rmsd(s[1].pos, s[0].pos).should be_close 7.933736, 1e-6
+      s[1].atoms.rmsd(s[0].atoms, minimize: true).should be_close 3.463298, 1e-6
+    end
+  end
 end

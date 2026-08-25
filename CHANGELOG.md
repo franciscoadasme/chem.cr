@@ -4,6 +4,11 @@
 
 ### Added
 
+#### Spatial
+
+- `Spatial.rmsd` computes RMSD between two `Indexable(Vec3)` coordinate sets, with optional named `weights` and superposition. Atom-aware RMSD lives on `AtomView#rmsd` and `Positions3Proxy#rmsd`.
+- `Spatial.coords` convert atom containers and coordinate proxies.
+
 #### Topology
 
 - Add 2-fold symmetry groups for ARG (`NH1`/`NH2`), ASP/ASH (`OD1`/`OD2`), and GLU/GLH (`OE1`/`OE2`), including interchangeable hydrogens on ARG, PHE, TYR, LEU, and VAL.
@@ -14,6 +19,13 @@
 - Read and write Schrödinger Maestro files (`.mae`, `.maegz`, `.mae.gz`), following [maeparser](https://github.com/schrodinger/maeparser).
 
 ### Changed
+
+#### Spatial
+
+- **Breaking:** RMSD `weights` is a named argument (`weights:`) on `Spatial.rmsd`, `AtomView#rmsd`, and `Positions3Proxy#rmsd`.
+- `Positions3Proxy` includes `Indexable(Vec3)`.
+- `Positions3Proxy#rmsd` no longer mutates the passed weights array when computing a minimized RMSD.
+- Unweighted `Positions3Proxy#rmsd` raises `ArgumentError` if the two coordinate sets have different sizes.
 
 #### Core
 

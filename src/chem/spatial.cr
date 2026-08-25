@@ -128,4 +128,96 @@ module Chem::Spatial
   def self.improper(cell : Parallelepiped, a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64
     dihedral cell, b, a, c, d
   end
+
+  # Returns a coordinate list for *obj*.
+  #
+  # Accepts coordinate arrays and anything that exposes atoms or a
+  # `pos` proxy (`AtomView`, `Structure`, residue/chain views, and
+  # `Positions3Proxy`).
+  def self.coords(pos : Indexable(Vec3)) : Indexable(Vec3)
+    pos
+  end
+
+  # :ditto:
+  def self.coords(atoms : AtomView) : Indexable(Vec3)
+    atoms.pos
+  end
+
+  # :ditto:
+  def self.coords(obj : Structure) : Indexable(Vec3)
+    obj.pos
+  end
+
+  # :ditto:
+  def self.coords(obj : Residue | ResidueView | Chain | ChainView) : Indexable(Vec3)
+    obj.atoms.pos
+  end
+
+  # Returns the root mean square deviation (RMSD) in Å between two
+  # coordinate sets.
+  #
+  # The RMSD is the average Euclidean distance between corresponding
+  # coordinates in *pos* and *ref_pos*. If *minimize* is `true`, the
+  # coordinates are superimposed first using the QCP method (see
+  # `.qcp`). *weights*, if given, determine the relative contribution
+  # of each coordinate.
+  #
+  # Raises `ArgumentError` if the two sets have different sizes or are
+  # empty.
+  #
+  # NOTE: Prefer `AtomView#rmsd` or `Positions3Proxy#rmsd` when
+  # coordinates belong to atoms, especially if symmetry-corrected RMSD
+  # is needed.
+  def self.rmsd(
+    pos : Indexable(Vec3),
+    ref_pos : Indexable(Vec3),
+    *,
+    weights : Indexable(Float64)? = nil,
+    minimize : Bool = false,
+  ) : Float64
+    raise ArgumentError.new("Incompatible coordinates") if pos.size != ref_pos.size
+    raise ArgumentError.new("Empty coordinates") if pos.empty?
+    if weights
+      raise ArgumentError.new("Incompatible coordinates") if weights.size != pos.size
+    end
+
+    if minimize
+      pos = pos.map(&.itself)
+      ref_pos = ref_pos.map(&.itself)
+      if weights
+        center = pos.average(weights)
+        pos.map! &.-(center)
+        center = ref_pos.average(weights)
+        ref_pos.map! &.-(center)
+        _, rmsd = qcp(pos, ref_pos, weights.map(&./(weights.mean)))
+        rmsd
+      else
+        center = pos.mean
+        pos.map! &.-(center)
+        center = ref_pos.mean
+        ref_pos.map! &.-(center)
+        _, rmsd = qcp(pos, ref_pos)
+        rmsd
+      end
+    elsif weights
+      Math.sqrt((0...pos.size).average(weights) do |i|
+        pos.unsafe_fetch(i).distance2 ref_pos.unsafe_fetch(i)
+      end)
+    else
+      Math.sqrt((0...pos.size).mean do |i|
+        pos.unsafe_fetch(i).distance2 ref_pos.unsafe_fetch(i)
+      end)
+    end
+  end
+
+  # :ditto:
+  def self.rmsd(
+    pos,
+    ref_pos,
+    *,
+    weights : Indexable(Float64)? = nil,
+    minimize : Bool = false,
+  ) : Float64
+    rmsd coords(pos), coords(ref_pos), weights: weights, minimize: minimize
+  end
 end
