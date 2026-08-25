@@ -96,7 +96,7 @@ templates:
     spec: "%{backbone}-CB-CG(-CD1)-CD2"
     link_bond: "C-N"
     symmetry:
-      - [["CD1", "CD2"]]
+      - [["CD1", "CD2"], ["HD11", "HD21"], ["HD12", "HD22"], ["HD13", "HD23"]]
   - description: Lysine
     name: LYS
     code: K
@@ -116,7 +116,7 @@ templates:
     spec: "%{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1"
     link_bond: "C-N"
     symmetry:
-      - [["CD1", "CD2"], ["CE1", "CE2"]]
+      - [["CD1", "CD2"], ["CE1", "CE2"], ["HD1", "HD2"], ["HE1", "HE2"]]
   - description: Proline
     name: PRO
     code: P
@@ -148,7 +148,7 @@ templates:
     spec: "%{backbone}-CB-CG%1=CD1-CE1=CZ(-OH)-CE2=CD2-%1"
     link_bond: "C-N"
     symmetry:
-      - [["CD1", "CD2"], ["CE1", "CE2"]]
+      - [["CD1", "CD2"], ["CE1", "CE2"], ["HD1", "HD2"], ["HE1", "HE2"]]
   - description: Valine
     name: VAL
     code: V
@@ -156,7 +156,7 @@ templates:
     spec: "%{backbone}-CB(-CG1)-CG2"
     link_bond: "C-N"
     symmetry:
-      - [["CG1", "CG2"]]
+      - [["CG1", "CG2"], ["HG11", "HG21"], ["HG12", "HG22"], ["HG13", "HG23"]]
 aliases:
   backbone: "N(-H)-CA(-HA)(-C=O)"
 ters:

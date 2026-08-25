@@ -101,6 +101,14 @@ class Chem::Templates::Builder
                   self.class.guess_root(atoms, bond_ts, link_bond)
                 end
 
+    known_names = Set.new(atoms.map(&.name))
+    @symmetric_atom_groups.each do |pairs|
+      pairs.each do |a, b|
+        raise "Unknown atom #{a}" unless a.in?(known_names)
+        raise "Unknown atom #{b}" unless b.in?(known_names)
+      end
+    end
+
     Residue.new @names, @code, @type, @description,
       atoms, bond_ts, root_name, link_bond, @symmetric_atom_groups
   end
@@ -111,9 +119,10 @@ class Chem::Templates::Builder
   end
 
   private def check_atom(name : String) : Nil
-    unless (parser = @spec_parser) && parser.atom_map[name]?
-      raise "Unknown atom #{name}"
-    end
+    return if (parser = @spec_parser) && parser.atom_map[name]?
+    # Implicit hydrogens (HD1, HG11, HH11, ...) are named during #build.
+    return if name.size > 1 && name.starts_with?('H')
+    raise "Unknown atom #{name}"
   end
 
   def description(name : String) : self

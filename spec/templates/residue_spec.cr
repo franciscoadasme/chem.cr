@@ -145,4 +145,20 @@ describe Chem::Templates::Residue do
       res_t.polymer?.should be_true
     end
   end
+
+  describe "#symmetric_atom_groups" do
+    it "includes 2-fold sidechain symmetries for amino acids" do
+      registry = Chem::Templates::Registry.default
+      registry["PHE"].symmetric_atom_groups.should eq [[{"CD1", "CD2"}, {"CE1", "CE2"}, {"HD1", "HD2"}, {"HE1", "HE2"}]]
+      registry["TYR"].symmetric_atom_groups.should eq [[{"CD1", "CD2"}, {"CE1", "CE2"}, {"HD1", "HD2"}, {"HE1", "HE2"}]]
+      registry["LEU"].symmetric_atom_groups.should eq [[{"CD1", "CD2"}, {"HD11", "HD21"}, {"HD12", "HD22"}, {"HD13", "HD23"}]]
+      registry["VAL"].symmetric_atom_groups.should eq [[{"CG1", "CG2"}, {"HG11", "HG21"}, {"HG12", "HG22"}, {"HG13", "HG23"}]]
+      registry["ARG"].symmetric_atom_groups.should eq [[{"NH1", "NH2"}, {"HH11", "HH21"}, {"HH12", "HH22"}]]
+      registry["ASP"].symmetric_atom_groups.should eq [[{"OD1", "OD2"}]]
+      registry["ASH"].symmetric_atom_groups.should eq [[{"OD1", "OD2"}]]
+      registry["GLU"].symmetric_atom_groups.should eq [[{"OE1", "OE2"}]]
+      registry["GLH"].symmetric_atom_groups.should eq [[{"OE1", "OE2"}]]
+      registry["ASN"].symmetric_atom_groups.should eq [] of Array(Tuple(String, String))
+    end
+  end
 end

@@ -252,6 +252,28 @@ describe Chem::Templates::Builder do
     groups[1].should eq [{"C19", "C23"}, {"C20", "C22"}]
   end
 
+  it "allows implicit hydrogen names in symmetry groups" do
+    res_t = build_template do
+      name "PHE"
+      type :protein
+      spec "%{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1"
+      symmetry({"CD1", "CD2"}, {"CE1", "CE2"}, {"HD1", "HD2"}, {"HE1", "HE2"})
+    end
+    groups = res_t.symmetric_atom_groups.should_not be_nil
+    groups.should eq [[{"CD1", "CD2"}, {"CE1", "CE2"}, {"HD1", "HD2"}, {"HE1", "HE2"}]]
+  end
+
+  it "raises if a symmetry hydrogen is unknown" do
+    expect_raises(Chem::Error, "Unknown atom HD9") do
+      build_template do
+        name "PHE"
+        type :protein
+        spec "%{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1"
+        symmetry({"CD1", "CD2"}, {"HD9", "HD2"})
+      end
+    end
+  end
+
   it "raises if a symmetry atom is unknown" do
     expect_raises(Chem::Error, "Unknown atom C13") do
       build_template do
