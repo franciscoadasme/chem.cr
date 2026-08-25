@@ -733,14 +733,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/atom_view.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/core/atom_view.cr#L2" target="_blank">
         chem/core/atom_view.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">
         chem/register_format.cr
       </a>
     
@@ -802,6 +802,27 @@
     
       <li class="entry-summary">
         <a href="#residues%3AResidueView-instance-method" class="signature"><strong>#residues</strong> : ResidueView</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rmsd%28other%3Aself%7CResidue%7CResidueView%7CChain%7CChainView%7CStructure%7CSpatial%3A%3APositions3Proxy%2C%2A%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cminimize%3ABool%3Dfalse%2Cuse_symmetry%3ABool%3Dfalse%29%3AFloat64-instance-method" class="signature"><strong>#rmsd</strong>(other : <span class="k">self</span> | Residue | ResidueView | Chain | ChainView | Structure | Spatial::Positions3Proxy, *, weights : Indexable(Float64) | Nil = <span class="n">nil</span>, minimize : Bool = <span class="n">false</span>, use_symmetry : Bool = <span class="n">false</span>) : Float64</a>
+        
+          <div class="summary"><p>Returns the RMSD in Å between the enclosed atoms and <em>other</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rmsd%28other%3AIndexable%28Spatial%3A%3AVec3%29%2C%2A%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cminimize%3ABool%3Dfalse%29%3AFloat64-instance-method" class="signature"><strong>#rmsd</strong>(other : Indexable(Spatial::Vec3), *, weights : Indexable(Float64) | Nil = <span class="n">nil</span>, minimize : Bool = <span class="n">false</span>) : Float64</a>
+        
+          <div class="summary"><p>Returns the RMSD in Å between the enclosed atoms and <em>other</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sort_by_symmetry%28toother%3Aself%29%3Aself-instance-method" class="signature"><strong>#sort_by_symmetry</strong>(to other : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new view whose atoms are permuted so that known symmetric atoms best match <em>other</em>.</p></div>
         
       </li>
     
@@ -1161,7 +1182,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/atom_view.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/core/atom_view.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1177,7 +1198,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/atom_view.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/core/atom_view.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1193,7 +1214,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/atom_view.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/core/atom_view.cr#L147" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1209,7 +1230,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/atom_view.cr#L48" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/core/atom_view.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1225,7 +1246,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/atom_view.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/core/atom_view.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1246,7 +1267,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/atom_view.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/core/atom_view.cr#L140" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1262,7 +1283,91 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/atom_view.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/core/atom_view.cr#L170" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rmsd(other:self|Residue|ResidueView|Chain|ChainView|Structure|Spatial::Positions3Proxy,*,weights:Indexable(Float64)|Nil=nil,minimize:Bool=false,use_symmetry:Bool=false):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>rmsd</strong>(other : <span class="k">self</span> | <a href="../Chem/Residue.html">Residue</a> | <a href="../Chem/ResidueView.html">ResidueView</a> | <a href="../Chem/Chain.html">Chain</a> | <a href="../Chem/ChainView.html">ChainView</a> | <a href="../Chem/Structure.html">Structure</a> | <a href="../Chem/Spatial/Positions3Proxy.html">Spatial::Positions3Proxy</a>, *, weights : <a href="../Indexable.html">Indexable</a>(Float64) | Nil = <span class="n">nil</span>, minimize : Bool = <span class="n">false</span>, use_symmetry : Bool = <span class="n">false</span>) : Float64
+
+        <a class="method-permalink" href="#rmsd%28other%3Aself%7CResidue%7CResidueView%7CChain%7CChainView%7CStructure%7CSpatial%3A%3APositions3Proxy%2C%2A%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cminimize%3ABool%3Dfalse%2Cuse_symmetry%3ABool%3Dfalse%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the RMSD in Å between the enclosed atoms and <em>other</em>.</p>
+<p>Delegates to <code><a href="../Chem/Spatial.html#rmsd%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2C%2A%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cminimize%3ABool%3Dfalse%29%3AFloat64-class-method">Spatial.rmsd</a></code>. If <em>use_symmetry</em> is <code>true</code>, atoms
+that belong to a residue template's <code>symmetric_atom_groups</code> are
+permuted so that they best match <em>other</em> before the RMSD is
+computed. The reference (<em>other</em>) is left unchanged. See
+<code><a href="../Chem/AtomView.html#sort_by_symmetry%28toother%3Aself%29%3Aself-instance-method">#sort_by_symmetry</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/core/atom_view.cr#L104" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rmsd(other:Indexable(Spatial::Vec3),*,weights:Indexable(Float64)|Nil=nil,minimize:Bool=false):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>rmsd</strong>(other : <a href="../Indexable.html">Indexable</a>(<a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>), *, weights : <a href="../Indexable.html">Indexable</a>(Float64) | Nil = <span class="n">nil</span>, minimize : Bool = <span class="n">false</span>) : Float64
+
+        <a class="method-permalink" href="#rmsd%28other%3AIndexable%28Spatial%3A%3AVec3%29%2C%2A%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cminimize%3ABool%3Dfalse%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the RMSD in Å between the enclosed atoms and <em>other</em>.
+Delegates to <code><a href="../Chem/Spatial.html#rmsd%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2C%2A%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cminimize%3ABool%3Dfalse%29%3AFloat64-class-method">Spatial.rmsd</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/core/atom_view.cr#L118" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sort_by_symmetry(toother:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>sort_by_symmetry</strong>(to other : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#sort_by_symmetry%28toother%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new view whose atoms are permuted so that known
+symmetric atoms best match <em>other</em>.</p>
+<p>Pairing is by index: <em>other</em> is the reference and is never
+reordered. Only atoms in <code>self</code> are swapped. Symmetric atoms are
+those listed in a residue template's <code>symmetric_atom_groups</code>. Each
+group is a 2-fold interchange that must be applied all at once
+(e.g. phenylalanine CD1↔CD2 together with CE1↔CE2). Independent
+groups are enumerated locally per residue.</p>
+<p>For each residue that contributes atoms to both views, every
+combination of its applicable groups is scored by the minimized
+(fit) RMSD of that residue's selected atoms, using in-place RMSD
+as a tiebreaker. The winning permutation is then used for the
+global atom order. Residues without a template, without symmetry,
+or whose symmetric atoms are missing from the view are skipped.
+Atoms without a parent residue are left unchanged.</p>
+<p>Raises <code>ArgumentError</code> if the two views have different sizes.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/core/atom_view.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1283,7 +1388,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/atom_view.cr#L61" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/core/atom_view.cr#L177" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1299,7 +1404,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1315,7 +1420,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1331,7 +1436,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1347,7 +1452,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1363,7 +1468,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1379,7 +1484,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1395,7 +1500,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1411,7 +1516,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1427,7 +1532,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1443,7 +1548,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1459,7 +1564,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1475,7 +1580,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1496,7 +1601,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/core/atom_view.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/core/atom_view.cr#L182" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1512,7 +1617,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1528,7 +1633,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1544,7 +1649,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1560,7 +1665,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1576,7 +1681,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1592,7 +1697,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1608,7 +1713,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1624,7 +1729,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1645,7 +1750,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1661,7 +1766,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/register_format.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/register_format.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>

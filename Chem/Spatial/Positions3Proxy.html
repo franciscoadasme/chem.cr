@@ -699,7 +699,7 @@
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type"><a href="../../Enumerable.html">Enumerable</a>(<a href="../../Chem/Spatial/Vec3.html">Chem::Spatial::Vec3</a>)</li>
+      <li class="other-type"><a href="../../Indexable.html">Indexable</a>(<a href="../../Chem/Spatial/Vec3.html">Chem::Spatial::Vec3</a>)</li>
     
       <li class="other-type">Iterable(<a href="../../Chem/Spatial/Vec3.html">Chem::Spatial::Vec3</a>)</li>
     
@@ -724,7 +724,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L2" target="_blank">
         chem/spatial/positions3_proxy.cr
       </a>
     
@@ -778,6 +778,13 @@
         <a href="#align_to%28other%3Aself%29%3Aself-instance-method" class="signature"><strong>#align_to</strong>(other : <span class="k">self</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Superimposes the coordinates onto <em>other</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#atoms%3AAtomView-instance-method" class="signature"><strong>#atoms</strong> : AtomView</a>
+        
+          <div class="summary"><p>Atoms whose coordinates are wrapped by this proxy.</p></div>
         
       </li>
     
@@ -836,7 +843,7 @@
       <li class="entry-summary">
         <a href="#each%28fractional%3ABool%3Dfalse%2C%26block%3AVec3-%3E%29-instance-method" class="signature"><strong>#each</strong>(fractional : Bool = <span class="n">false</span>, &block : Vec3 -> )</a>
         
-          <div class="summary"><p>Must yield this collection's elements to the block.</p></div>
+          <div class="summary"><p>Calls the given block once for each element in <code>self</code>, passing that element as a parameter.</p></div>
         
       </li>
     
@@ -863,14 +870,14 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#rmsd%28other%3Aself%2Cweights%3AIndexable%28Float64%29%2Cminimize%3ABool%3Dfalse%29%3AFloat64-instance-method" class="signature"><strong>#rmsd</strong>(other : <span class="k">self</span>, weights : Indexable(Float64), minimize : Bool = <span class="n">false</span>) : Float64</a>
+        <a href="#rmsd%28other%3AAtomView%7CResidue%7CResidueView%7CChain%7CChainView%7CStructure%7Cself%2C%2A%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cminimize%3ABool%3Dfalse%2Cuse_symmetry%3ABool%3Dfalse%29%3AFloat64-instance-method" class="signature"><strong>#rmsd</strong>(other : AtomView | Residue | ResidueView | Chain | ChainView | Structure | <span class="k">self</span>, *, weights : Indexable(Float64) | Nil = <span class="n">nil</span>, minimize : Bool = <span class="n">false</span>, use_symmetry : Bool = <span class="n">false</span>) : Float64</a>
         
-          <div class="summary"><p>Returns the weighted root mean square deviation (RMSD) in Å between the coordinates and <em>other</em>.</p></div>
+          <div class="summary"><p>Returns the root mean square deviation (RMSD) in Å between the coordinates and <em>other</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#rmsd%28other%3APositions3Proxy%2Cminimize%3ABool%3Dfalse%29%3AFloat64-instance-method" class="signature"><strong>#rmsd</strong>(other : Positions3Proxy, minimize : Bool = <span class="n">false</span>) : Float64</a>
+        <a href="#rmsd%28other%3AIndexable%28Vec3%29%2C%2A%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cminimize%3ABool%3Dfalse%29%3AFloat64-instance-method" class="signature"><strong>#rmsd</strong>(other : Indexable(Vec3), *, weights : Indexable(Float64) | Nil = <span class="n">nil</span>, minimize : Bool = <span class="n">false</span>) : Float64</a>
         
           <div class="summary"><p>Returns the root mean square deviation (RMSD) in Å between the coordinates and <em>other</em>.</p></div>
         
@@ -894,6 +901,13 @@
         <a href="#rotate%28quat%3AQuat%2Cpivot%3AVec3%3Dcenter%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(quat : Quat, pivot : Vec3 = center) : <span class="k">self</span></a>
         
           <div class="summary"><p>Rotates the coordinates by the given quaternion.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size%3AInt32-instance-method" class="signature"><strong>#size</strong> : Int32</a>
+        
+          <div class="summary"><p>Returns the number of elements in this container.</p></div>
         
       </li>
     
@@ -929,6 +943,13 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#unsafe_fetch%28index%3AInt%29%3AVec3-instance-method" class="signature"><strong>#unsafe_fetch</strong>(index : Int) : Vec3</a>
+        
+          <div class="summary"><p>Returns the element at the given <em>index</em>, without doing any bounds check.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#unwrap%3Aself-instance-method" class="signature"><strong>#unwrap</strong> : <span class="k">self</span></a>
         
       </li>
@@ -950,6 +971,38 @@
   <div class="methods-inherited">
     
       
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+  <h3>Instance methods inherited from module <code><a href="../../Indexable.html">Indexable</a>(<a href="../../Chem/Spatial/Vec3.html">Chem::Spatial::Vec3</a>)</code></h3>
+  
+  
+    <a href="../../Indexable.html#%5B%5D%28idxs%3ATuple%29%3ATuple-instance-method" class="tooltip">
+      <span>[](idxs : Tuple) : Tuple<br/>[](idxs : Enumerable(Int)) : Array(T)<br/>[](*idxs : Int) : Tuple</span>
+    []</a>, 
+    
+  
+    <a href="../../Indexable.html#sentence%28io%3AIO%2Cseparator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%2C%26%3AT%2CIO-%3E%29%3ANil-instance-method" class="tooltip">
+      <span>sentence(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T, IO -> ) : Nil<br/>sentence(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : Nil<br/>sentence(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T -> ) : String<br/>sentence(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : String</span>
+    sentence</a>, 
+    
+  
+    <a href="../../Indexable.html#to_dcd%28io%3AIO%2Ctitle%3AString%7CNil%3Dnil%29%3ANil-instance-method" class="tooltip">
+      <span>to_dcd(io : IO, title : String | Nil = <span class="n">nil</span>) : Nil<br/>to_dcd(title : String | Nil = <span class="n">nil</span>) : String<br/>to_dcd(path : Path | String, title : String | Nil = <span class="n">nil</span>) : Nil</span>
+    to_dcd</a>
+    
+  
 
 
       
@@ -1073,6 +1126,19 @@
 
 
     
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
   </div>
 
   
@@ -1096,7 +1162,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1128,7 +1194,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1163,7 +1229,28 @@ details).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L44" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="atoms:AtomView-instance-method">
+      <div class="signature">
+        
+        def <strong>atoms</strong> : <a href="../../Chem/AtomView.html">AtomView</a>
+
+        <a class="method-permalink" href="#atoms%3AAtomView-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Atoms whose coordinates are wrapped by this proxy.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1179,7 +1266,7 @@ details).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L48" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1195,7 +1282,7 @@ details).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L49" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1220,7 +1307,7 @@ structure.pos.center <span class="c"># =&gt; [1.5 5.0 3.2]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L61" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L72" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1245,7 +1332,7 @@ structure.pos.center <span class="c"># =&gt; [10 20 30]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L74" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L85" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1275,7 +1362,7 @@ structure.pos.center_at_cell <span class="c"># raises NotPeriodicError</span></c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L92" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L103" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1300,7 +1387,7 @@ structure.pos.center <span class="c"># =&gt; [0.0 0.0 0.0]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L105" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L116" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1328,7 +1415,7 @@ structure.pos.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]</sp
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L120" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L131" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1353,7 +1440,7 @@ structure.pos.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]</sp
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L130" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L141" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1369,16 +1456,21 @@ structure.pos.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]</sp
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from module <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Chem/Spatial/Vec3.html">Chem::Spatial::Vec3</a>)
+              Description copied from module <a href="../../Indexable.html">Indexable</a>(<a href="../../Chem/Spatial/Vec3.html">Chem::Spatial::Vec3</a>)
             </div>
           
-          <p>Must yield this collection's elements to the block.</p>
+          <p>Calls the given block once for each element in <code>self</code>, passing that
+element as a parameter.</p>
+<pre><code class="language-crystal">a <span class="o">=</span> [<span class="s">&quot;a&quot;</span>, <span class="s">&quot;b&quot;</span>, <span class="s">&quot;c&quot;</span>]
+a.each { <span class="o">|</span>x<span class="o">|</span> print x, <span class="s">&quot; -- &quot;</span> }</code></pre>
+<p>produces:</p>
+<pre><code class="language-text">a -- b -- c --</code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L139" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L150" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1394,7 +1486,7 @@ structure.pos.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]</sp
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L148" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L159" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1410,7 +1502,7 @@ structure.pos.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]</sp
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L156" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L167" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1426,7 +1518,7 @@ structure.pos.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]</sp
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L168" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L179" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1455,67 +1547,56 @@ molecule.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L266" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L229" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="rmsd(other:self,weights:Indexable(Float64),minimize:Bool=false):Float64-instance-method">
+    <div class="entry-detail" id="rmsd(other:AtomView|Residue|ResidueView|Chain|ChainView|Structure|self,*,weights:Indexable(Float64)|Nil=nil,minimize:Bool=false,use_symmetry:Bool=false):Float64-instance-method">
       <div class="signature">
         
-        def <strong>rmsd</strong>(other : <span class="k">self</span>, weights : <a href="../../Indexable.html">Indexable</a>(Float64), minimize : Bool = <span class="n">false</span>) : Float64
+        def <strong>rmsd</strong>(other : <a href="../../Chem/AtomView.html">AtomView</a> | <a href="../../Chem/Residue.html">Residue</a> | <a href="../../Chem/ResidueView.html">ResidueView</a> | <a href="../../Chem/Chain.html">Chain</a> | <a href="../../Chem/ChainView.html">ChainView</a> | <a href="../../Chem/Structure.html">Structure</a> | <span class="k">self</span>, *, weights : <a href="../../Indexable.html">Indexable</a>(Float64) | Nil = <span class="n">nil</span>, minimize : Bool = <span class="n">false</span>, use_symmetry : Bool = <span class="n">false</span>) : Float64
 
-        <a class="method-permalink" href="#rmsd%28other%3Aself%2Cweights%3AIndexable%28Float64%29%2Cminimize%3ABool%3Dfalse%29%3AFloat64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the weighted root mean square deviation (RMSD) in Å
-between the coordinates and <em>other</em>.</p>
-<p>The RMSD is defined as the weighted average Euclidean distance
-between the two coordinates sets <em>A</em> and <em>B</em>. The <em>weights</em> (e.g.,
-atom masses) determine the relative weights of each coordinate
-when calculating the RMSD.</p>
-<p>If the minimum RMSD is desired (<em>minimize</em> is <code>true</code>), the RMSD
-will be computed using the quaternion-based characteristic
-polynomial (QCP) method (refer to <code>.qcp</code>). This method superimpose
-the coordinates onto <em>other</em> by computing the optimal rotation
-between the two coordinate sets before calculating the RMSD.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L190" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="rmsd(other:Positions3Proxy,minimize:Bool=false):Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>rmsd</strong>(other : <a href="../../Chem/Spatial/Positions3Proxy.html">Positions3Proxy</a>, minimize : Bool = <span class="n">false</span>) : Float64
-
-        <a class="method-permalink" href="#rmsd%28other%3APositions3Proxy%2Cminimize%3ABool%3Dfalse%29%3AFloat64-instance-method">#</a>
+        <a class="method-permalink" href="#rmsd%28other%3AAtomView%7CResidue%7CResidueView%7CChain%7CChainView%7CStructure%7Cself%2C%2A%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cminimize%3ABool%3Dfalse%2Cuse_symmetry%3ABool%3Dfalse%29%3AFloat64-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the root mean square deviation (RMSD) in Å between the
 coordinates and <em>other</em>.</p>
-<p>The RMSD is defined as the average Euclidean distance between the
-two coordinates sets <em>A</em> and <em>B</em>.</p>
-<p>If the minimum RMSD is desired (<em>minimize</em> is <code>true</code>), the RMSD
-will be computed using the quaternion-based characteristic
-polynomial (QCP) method (refer to <code>.qcp</code>). This method superimpose
-the coordinates onto <em>other</em> by computing the optimal rotation
-between the two coordinate sets before calculating the RMSD.</p>
+<p>Delegates to <code><a href="../../Chem/AtomView.html#rmsd%28other%3Aself%7CResidue%7CResidueView%7CChain%7CChainView%7CStructure%7CSpatial%3A%3APositions3Proxy%2C%2A%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cminimize%3ABool%3Dfalse%2Cuse_symmetry%3ABool%3Dfalse%29%3AFloat64-instance-method">AtomView#rmsd</a></code>. If <em>use_symmetry</em> is <code>true</code>, atoms in
+<code>self</code> that belong to a residue template's <code>symmetric_atom_groups</code>
+are permuted so that they best match <em>other</em> before the RMSD is
+computed. The reference (<em>other</em>) is left unchanged. This is
+opt-in and defaults to <code>false</code>. See <code><a href="../../Chem/AtomView.html#sort_by_symmetry%28toother%3Aself%29%3Aself-instance-method">AtomView#sort_by_symmetry</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L231" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L196" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rmsd(other:Indexable(Vec3),*,weights:Indexable(Float64)|Nil=nil,minimize:Bool=false):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>rmsd</strong>(other : <a href="../../Indexable.html">Indexable</a>(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>), *, weights : <a href="../../Indexable.html">Indexable</a>(Float64) | Nil = <span class="n">nil</span>, minimize : Bool = <span class="n">false</span>) : Float64
+
+        <a class="method-permalink" href="#rmsd%28other%3AIndexable%28Vec3%29%2C%2A%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cminimize%3ABool%3Dfalse%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the root mean square deviation (RMSD) in Å between the
+coordinates and <em>other</em>. Delegates to <code><a href="../../Chem/Spatial.html#rmsd%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2C%2A%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cminimize%3ABool%3Dfalse%29%3AFloat64-class-method">Spatial.rmsd</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L208" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1539,7 +1620,7 @@ coordinates' center.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L276" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1563,7 +1644,7 @@ coordinates' center.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L285" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L248" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1586,7 +1667,32 @@ coordinates' center.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L292" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L255" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>size</strong> : Int32
+
+        <a class="method-permalink" href="#size%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from module <a href="../../Indexable.html">Indexable</a>(<a href="../../Chem/Spatial/Vec3.html">Chem::Spatial::Vec3</a>)
+            </div>
+          
+          <p>Returns the number of elements in this container.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1612,7 +1718,7 @@ coordinates' center.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L312" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L275" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1628,7 +1734,7 @@ coordinates' center.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L318" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L281" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1644,7 +1750,7 @@ coordinates' center.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L323" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L286" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1665,7 +1771,7 @@ coordinates' center.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L303" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L266" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1686,7 +1792,39 @@ coordinates' center.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L308" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L271" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unsafe_fetch(index:Int):Vec3-instance-method">
+      <div class="signature">
+        
+        def <strong>unsafe_fetch</strong>(index : <a href="../../Int.html">Int</a>) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
+
+        <a class="method-permalink" href="#unsafe_fetch%28index%3AInt%29%3AVec3-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from module <a href="../../Indexable.html">Indexable</a>(<a href="../../Chem/Spatial/Vec3.html">Chem::Spatial::Vec3</a>)
+            </div>
+          
+          <p>Returns the element at the given <em>index</em>, without doing any bounds check.</p>
+<p><code><a href="../../Indexable.html">Indexable</a></code> makes sure to invoke this method with <em>index</em> in <code>0...size</code>,
+so converting negative indices to positive ones is not needed here.</p>
+<p>Clients never invoke this method directly. Instead, they access
+elements with <code>#[](index)</code> and <code>#[]?(index)</code>.</p>
+<p>This method should only be directly invoked if you are absolutely
+sure the index is in bounds, to avoid a bounds check for a small boost
+of performance.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1702,7 +1840,7 @@ coordinates' center.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L328" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L291" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1718,7 +1856,7 @@ coordinates' center.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L352" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L315" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1734,7 +1872,7 @@ coordinates' center.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/62dd2bea26a0a0eef891bf936cf61096c080bb32/src/chem/spatial/positions3_proxy.cr#L357" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b3fca915c8816bbad08f25f22cc06f3a6c0dd49c/src/chem/spatial/positions3_proxy.cr#L320" target="_blank">View source</a>]
         
       </div>
     </div>
