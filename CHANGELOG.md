@@ -7,6 +7,7 @@
 #### Topology
 
 - Add 2-fold symmetry groups for ARG (`NH1`/`NH2`), ASP/ASH (`OD1`/`OD2`), and GLU/GLH (`OE1`/`OE2`), including interchangeable hydrogens on ARG, PHE, TYR, LEU, and VAL.
+- `AtomView#sort_by_symmetry` permutes known symmetric atoms in a view to best match a reference.
 
 #### Input/output
 
