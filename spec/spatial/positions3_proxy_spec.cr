@@ -259,6 +259,114 @@ describe Chem::Spatial::Positions3Proxy do
       s[1].pos.rmsd(s[0]).should be_close expected, 1e-6
       Chem::Spatial.rmsd(s[1].pos, s[0].pos.to_a).should be_close expected, 1e-6
     end
+
+    describe "use_symmetry" do
+      it "is disabled by default" do
+        ref, mobile = phe_pair_with_flipped_ring
+        uncorrected = mobile.pos.rmsd(ref.pos)
+        uncorrected.should be > 0.5
+        mobile.pos.rmsd(ref.pos, use_symmetry: false).should eq uncorrected
+      end
+
+      it "corrects a phenylalanine ring flip" do
+        ref, mobile = phe_pair_with_flipped_ring
+        mobile.pos.rmsd(ref.pos, use_symmetry: true).should be_close 0, 1e-6
+        mobile.atoms.rmsd(ref.atoms, use_symmetry: true).should be_close 0, 1e-6
+      end
+
+      it "does not modify the original atom order" do
+        ref, mobile = phe_pair_with_flipped_ring
+        names = mobile.atoms.map(&.name)
+        mobile.pos.rmsd(ref.pos, use_symmetry: true)
+        mobile.atoms.map(&.name).should eq names
+      end
+
+      it "corrects a ring flip when structures are superimposed" do
+        ref, mobile = phe_pair_with_flipped_ring
+        mobile.pos.rotate(35, 80, 15)
+        without = mobile.pos.rmsd(ref.pos, minimize: true)
+        with_sym = mobile.pos.rmsd(ref.pos, minimize: true, use_symmetry: true)
+        with_sym.should be_close 0, 1e-5
+        without.should be > 0.5
+      end
+
+      it "corrects a carboxylate swap on aspartate" do
+        ref = fake_structure
+        mobile = ref.clone
+        asp = mobile.residues.find!(&.name.==("ASP"))
+        asp["OD1"].pos, asp["OD2"].pos = asp["OD2"].pos, asp["OD1"].pos
+        mobile.pos.rmsd(ref.pos).should be > 0.3
+        mobile.pos.rmsd(ref.pos, use_symmetry: true).should be_close 0, 1e-6
+      end
+
+      it "handles a partial residue selection" do
+        ref, mobile = phe_pair_with_flipped_ring
+        names = %w(CD1 CD2 CE1 CE2)
+        ref_phe = ref.residues.find!(&.name.==("PHE"))
+        mobile_phe = mobile.residues.find!(&.name.==("PHE"))
+        ref_sel = Chem::AtomView.new names.map { |name| ref_phe[name] }
+        mobile_sel = Chem::AtomView.new names.map { |name| mobile_phe[name] }
+        mobile_sel.pos.rmsd(ref_sel.pos).should be > 1
+        mobile_sel.pos.rmsd(ref_sel.pos, use_symmetry: true).should be_close 0, 1e-6
+      end
+
+      it "skips a group when a pair is missing from the selection" do
+        ref, mobile = phe_pair_with_flipped_ring
+        names = %w(N CA C CB CG CD1 CE1 CZ)
+        ref_phe = ref.residues.find!(&.name.==("PHE"))
+        mobile_phe = mobile.residues.find!(&.name.==("PHE"))
+        ref_sel = Chem::AtomView.new names.map { |name| ref_phe[name] }
+        mobile_sel = Chem::AtomView.new names.map { |name| mobile_phe[name] }
+        # CD2/CE2 are absent so the Phe group cannot be applied
+        mobile_sel.pos.rmsd(ref_sel.pos, use_symmetry: true).should eq mobile_sel.pos.rmsd(ref_sel.pos)
+      end
+
+      it "enumerates independent groups on the same residue" do
+        unless Chem::Templates::Registry.default["SY2"]?
+          Chem::Templates::Registry.default.register do
+            name "SY2"
+            spec "C1%1=C2-C3=C4-C5=C6-%1-C7%2=C8-C9=C10-C11=C12-%2"
+            symmetry({"C2", "C6"}, {"C3", "C5"})
+            symmetry({"C8", "C12"}, {"C9", "C11"})
+          end
+        end
+
+        ref = Chem::Structure.build do
+          residue "SY2" do
+            atom "C1", vec3(0, 0, 0)
+            atom "C2", vec3(1, 1, 0)
+            atom "C3", vec3(2, 1, 0)
+            atom "C4", vec3(3, 0, 0)
+            atom "C5", vec3(2, -1, 0)
+            atom "C6", vec3(1, -1, 0)
+            atom "C7", vec3(4, 0, 0)
+            atom "C8", vec3(5, 1, 0)
+            atom "C9", vec3(6, 1, 0)
+            atom "C10", vec3(7, 0, 0)
+            atom "C11", vec3(6, -1, 0)
+            atom "C12", vec3(5, -1, 0)
+          end
+        end
+        mobile = ref.clone
+        res = mobile.residues[0]
+        {"C2" => "C6", "C3" => "C5", "C8" => "C12", "C9" => "C11"}.each do |a, b|
+          res[a].pos, res[b].pos = res[b].pos, res[a].pos
+        end
+        mobile.pos.rmsd(ref.pos).should be > 1
+        mobile.pos.rmsd(ref.pos, use_symmetry: true).should be_close 0, 1e-6
+      end
+
+      it "is a no-op without residue topology" do
+        ref = Chem::Structure.build do
+          atom Chem::PeriodicTable::C, vec3(0, 0, 0)
+          atom Chem::PeriodicTable::C, vec3(1, 0, 0)
+        end
+        mobile = Chem::Structure.build do
+          atom Chem::PeriodicTable::C, vec3(1, 0, 0)
+          atom Chem::PeriodicTable::C, vec3(0, 0, 0)
+        end
+        mobile.pos.rmsd(ref.pos, use_symmetry: true).should eq mobile.pos.rmsd(ref.pos)
+      end
     end
   end
 
@@ -425,4 +533,14 @@ describe Chem::Spatial::Positions3Proxy do
       pos.should be_close expected, 1e-3
     end
   end
+end
+
+private def phe_pair_with_flipped_ring : {Chem::Structure, Chem::Structure}
+  ref = fake_structure
+  mobile = ref.clone
+  phe = mobile.residues.find!(&.name.==("PHE"))
+  {"CD1" => "CD2", "CE1" => "CE2"}.each do |a, b|
+    phe[a].pos, phe[b].pos = phe[b].pos, phe[a].pos
+  end
+  {ref, mobile}
 end

@@ -3,6 +3,9 @@ module Chem::Spatial
     include Indexable(Vec3)
     include Iterable(Vec3)
 
+    # Atoms whose coordinates are wrapped by this proxy.
+    getter atoms : AtomView
+
     def initialize(@atoms : AtomView, @cell : Parallelepiped? = nil)
     end
 
@@ -183,9 +186,27 @@ module Chem::Spatial
     end
 
     # Returns the root mean square deviation (RMSD) in Å between the
+    # coordinates and *other*.
+    #
+    # Delegates to `AtomView#rmsd`. If *use_symmetry* is `true`, atoms in
+    # `self` that belong to a residue template's `symmetric_atom_groups`
+    # are permuted so that they best match *other* before the RMSD is
+    # computed. The reference (*other*) is left unchanged. This is
+    # opt-in and defaults to `false`. See `AtomView#sort_by_symmetry`.
+    def rmsd(
+      other : AtomView | Residue | ResidueView | Chain | ChainView | Structure | self,
+      *,
+      weights : Indexable(Float64)? = nil,
+      minimize : Bool = false,
+      use_symmetry : Bool = false,
+    ) : Float64
+      @atoms.rmsd(other, weights: weights, minimize: minimize, use_symmetry: use_symmetry)
+    end
+
+    # Returns the root mean square deviation (RMSD) in Å between the
     # coordinates and *other*. Delegates to `Spatial.rmsd`.
     def rmsd(
-      other,
+      other : Indexable(Vec3),
       *,
       weights : Indexable(Float64)? = nil,
       minimize : Bool = false,

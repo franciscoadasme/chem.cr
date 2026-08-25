@@ -95,9 +95,28 @@ module Chem
     end
 
     # Returns the RMSD in Å between the enclosed atoms and *other*.
+    #
+    # Delegates to `Spatial.rmsd`. If *use_symmetry* is `true`, atoms
+    # that belong to a residue template's `symmetric_atom_groups` are
+    # permuted so that they best match *other* before the RMSD is
+    # computed. The reference (*other*) is left unchanged. See
+    # `#sort_by_symmetry`.
+    def rmsd(
+      other : self | Residue | ResidueView | Chain | ChainView | Structure | Spatial::Positions3Proxy,
+      *,
+      weights : Indexable(Float64)? = nil,
+      minimize : Bool = false,
+      use_symmetry : Bool = false,
+    ) : Float64
+      mobile = self
+      mobile = sort_by_symmetry(to: other.is_a?(self) ? other : other.atoms) if use_symmetry
+      Spatial.rmsd mobile, other, weights: weights, minimize: minimize
+    end
+
+    # Returns the RMSD in Å between the enclosed atoms and *other*.
     # Delegates to `Spatial.rmsd`.
     def rmsd(
-      other,
+      other : Indexable(Spatial::Vec3),
       *,
       weights : Indexable(Float64)? = nil,
       minimize : Bool = false,

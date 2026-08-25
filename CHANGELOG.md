@@ -6,6 +6,7 @@
 
 #### Spatial
 
+- Symmetry-corrected RMSD using residue template `symmetric_atom_groups` (`use_symmetry` on `AtomView#rmsd` and `Positions3Proxy#rmsd` only, opt-in) (#172). Atom order is resolved locally per residue so the combinatorial cost stays linear in the number of symmetric residues.
 - `Spatial.rmsd` computes RMSD between two `Indexable(Vec3)` coordinate sets, with optional named `weights` and superposition. Atom-aware RMSD lives on `AtomView#rmsd` and `Positions3Proxy#rmsd`.
 - `Spatial.coords` convert atom containers and coordinate proxies.
 
